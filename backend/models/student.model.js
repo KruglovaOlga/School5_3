@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-let tutionSchema = new mongoose.Schema(
+let tuitionSchema = new mongoose.Schema(
   {
     installment: { type: String },
     amount: { type: String },
@@ -13,25 +13,28 @@ let tutionSchema = new mongoose.Schema(
 let gradesSchema = new mongoose.Schema(
   {
     semester: { type: String },
-    Listening: { type: String },
-    Writing: { type: String },
-    Speaking: { type: String },
-    Reading: { type: String },
-    Grammar: { type: String },
-    "Use of English": { type: String },
+    listening: { type: String },
+    writing: { type: String },
+    speaking: { type: String },
+    reading: { type: String },
+    grammar: { type: String },
+    "use of english": { type: String },
   },
   { _id: false }
 );
 
 let emailSchema = new mongoose.Schema({
-  type: String,
-  trim: true,
-  lowercase: true,
-  match: [
-    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-    "Email address is not valid",
-  ],
-  unique: true, // make email field unique
+  type: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Email address is not valid",
+    ],
+    unique: true, // make email field unique
+  },
 });
 
 let addressSchema = new mongoose.Schema(
@@ -49,13 +52,6 @@ let phoneSchema = new mongoose.Schema(
   },
   { _id: false }
 );
-
-// let scheduleSchema = new mongoose.Schema({
-//   day: { type: String },
-//   time: { type: String },
-//   class: { type: String },
-//   group: { type: String },
-// },{ _id: false });
 
 const studentSchema = new mongoose.Schema(
   {
@@ -94,10 +90,9 @@ const studentSchema = new mongoose.Schema(
     },
     grades: { type: [gradesSchema], null: true },
     email: { type: [emailSchema], null: true },
-    tution: { type: [tutionSchema], null: true },
+    tuition: { type: [tuitionSchema], null: true },
     address: { type: [addressSchema], null: true },
     phone: phoneSchema,
-    // schedule: { type: [sheduleSchema], null: true }
   },
   {
     collection: "user",

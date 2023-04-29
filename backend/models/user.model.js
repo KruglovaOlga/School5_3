@@ -22,14 +22,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Category is required field"],
     },
-    firstname: {
-      type: String,
-      required: [true, "Firstname is required field"],
-    },
-    lastname: {
-      type: String,
-      required: [true, "Lastname is required field"],
-    },
+    // firstname: {
+    //   type: String,
+    //   required: [true, "Firstname is required field"],
+    // },
+    // lastname: {
+    //   type: String,
+    //   required: [true, "Lastname is required field"],
+    // },
   },
   {
     collection: "user",

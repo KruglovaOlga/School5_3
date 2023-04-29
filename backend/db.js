@@ -36,11 +36,14 @@ mongoose.connection.on("disconnected", () => {
   console.log("Mongoose disconnected");
 });
 
-// const student = require("./routes/student.routes");
-// app.use("/api/student", student);
+const student = require("./routes/student.routes");
+app.use("/api/student", student);
 
-// const teacher = require("./routes/teacher.routes");
-// app.use("/api/teacher", teacher);
+const teacher = require("./routes/teacher.routes");
+app.use("/api/teacher", teacher);
+
+const user = require("./routes/user.routes");
+app.use("/api/user", user);
 
 process.on("SIGINT", () => {
   mongoose.connection.close(() => {

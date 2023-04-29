@@ -1,17 +1,16 @@
 const Teacher = require("../models/teacher.model");
 
-exports.findAll = function (req, res) {
-  console.log("Find All Teachers");
+exports.findAll = async function (req, res) {
+  console.log("Find All Controller");
 
-  Teacher.find({}, (err, results) => {
-    if (err) {
-      res.status(400).json({ status: false, data: err });
-      console.log("Problem in reading users", err);
-    } else {
-      res.status(200).json({ status: true, data: results });
-      console.log("Success in reading users");
-    }
-  });
+  try {
+    const results = await Teacher.find({});
+    res.status(200).json({ status: true, data: results });
+    console.log("Success in reading teachers");
+  } catch (err) {
+    res.status(400).json({ status: false, data: err });
+    console.log("Problem in reading teachers", err);
+  }
 };
 
 exports.findOne = function (req, res) {
