@@ -1,7 +1,7 @@
 const Teacher = require("../models/teacher.model");
 
 exports.findAll = async function (req, res) {
-  console.log("Find All Controller");
+  console.log("Find All Teachers Controller");
 
   try {
     const results = await Teacher.find({});
@@ -13,44 +13,91 @@ exports.findAll = async function (req, res) {
   }
 };
 
-exports.findOne = function (req, res) {
-  console.log("Find One Controller");
-  res.json({ status: true, data: "Find One Controller" });
-};
-
-exports.create = function (req, res) {
-  const newTeacher = new Teacher({
-    username: req.body.username,
-    password: req.body.password,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    address: req.body.address,
-    phone: req.body.phone,
-  });
-
-  console.log("Insert teacher with username", req.body.username);
-
-  newStudent.save((err, result) => {
-    if (err) {
-      res.status(400).json({ status: false, data: err });
-      console.log(`Problem in creating teacher with username ${username}`, err);
+exports.getTeacherById = async (req, res) => {
+  console.log("Get Teacher by Id Controller");
+  try {
+    const teacher = await Teacher.findById(req.params.id);
+    if (!teacher) {
+      res.status(404).json({ success: false, error: "Teacher not found" });
     } else {
-      res.status(200).json({ status: true, data: result });
-      console.log(`Success in creating teacher with username ${username}`);
+      res.status(200).json({ success: true, data: teacher });
     }
-  });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
 };
 
-exports.update = function (req, res) {
+exports.getTeacherByUsername = async (req, res) => {
+  console.log("Get Teacher by Username Controller");
+  try {
+    const teacher = await Teacher.findByUsername(req.params.username);
+    if (!teacher) {
+      res.status(404).json({ success: false, error: "Teacher not found" });
+    } else {
+      res.status(200).json({ success: true, data: teacher });
+    }
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+// exports.findOne = function (_req, res) {
+//   console.log("Find One Controller");
+//   res.json({ status: true, data: "Find One Controller" });
+// };
+
+/*
+ using object destructuring to only 
+allow the fields that are defined in teacher.model to be saved
+ to the database. */
+exports.createTeacher = async (req, res) => {
+  console.log("Create Teacher Controller");
+  try {
+    const {
+      username,
+      password,
+      role,
+      category,
+      firstname,
+      lastname,
+      email,
+      phone,
+      address,
+    } = req.body;
+
+    const newTeacher = new Teacher({
+      username,
+      password,
+      role,
+      category,
+      firstname,
+      lastname,
+      email,
+      phone,
+      address,
+    });
+
+    await newTeacher.save();
+    console.log("Insert teacher with username", req.body.username);
+
+    res.status(201).json({ success: true, data: teacher });
+    console.log(`Success in creating teacher with username ${username}`);
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+    console.log(`Problem in creating teacher with username ${username}`, err);
+  }
+};
+
+// update by username
+exports.updateTeacherByUsername = function (req, res) {
+  console.log("Update Teacher by username Controller");
   const username = req.body.username;
   const updateTeacher = {
+    role: req.body.role,
+    category: req.body.category,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
-    class: req.body.class,
-    grades: req.body.grades,
     email: req.body.email,
-    tuition: req.body.tution,
     address: req.body.address,
     phone: req.body.phone,
   };
@@ -74,11 +121,47 @@ exports.update = function (req, res) {
   );
 };
 
-exports.delete = function (req, res) {
+// update by id
+exports.updateTeacherById = async (req, res) => {
+  console.log("Update Teacher by Id Controller");
+  try {
+    const { id } = req.params;
+    const allowedFields = [
+      "username",
+      "password",
+      "role",
+      "category",
+      "firstname",
+      "lastname",
+      "email",
+      "phone",
+      "address",
+    ];
+    const updateObj = {};
+    for (let field of allowedFields) {
+      if (req.body[field]) {
+        updateObj[field] = req.body[field];
+      }
+    }
+    const updatedTeacher = await Teacher.findByIdAndUpdate(id, updateObj, {
+      new: true,
+    });
+    if (!updatedTeacher) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Teacher not found" });
+    }
+    res.status(200).json({ success: true, data: updatedTeacher });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+exports.deleteTeacher = function (req, res) {
   const username = req.params.username;
   console.log("Delete teacher ", username);
 
-  Student.findOneAndDelete({ username: username }, (err, result) => {
+  Teacher.findOneAndDelete({ username: username }, (err, result) => {
     if (err) {
       res.status(400).json({ status: false, data: err });
       console.log(`Problem in deleting teacher with username ${username}`, err);
@@ -88,3 +171,32 @@ exports.delete = function (req, res) {
     }
   });
 };
+
+module.exports = {
+  findAll,
+  getTeacherById,
+  getTeacherByUsername,
+  createTeacher,
+  updateTeacherByUsername,
+  updateTeacherById,
+  deleteTeacher,
+};
+
+/********************************************************************** */
+
+// // UPDATE
+// exports.updateTeacher = async (req, res) => {
+//   try {
+//     const teacher = await Teacher.findByIdAndUpdate(req.params.id, req.body, {
+//       new: true,
+//       runValidators: true,
+//     });
+//     if (!teacher) {
+//       res.status(404).json({ success: false, error: "Teacher not found" });
+//     } else {
+//       res.status(200).json({ success: true, data: teacher });
+//     }
+//   } catch (error) {
+//     res.status(400).json({ success: false, error: error.message });
+//   }
+// };

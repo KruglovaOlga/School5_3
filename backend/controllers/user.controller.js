@@ -204,7 +204,6 @@ module.exports = {
   createUser,
   getUsers,
   getUserById,
-  getUserById,
   getUserByUsername,
   updateUserById,
   updateUserByUsername,

@@ -3,9 +3,18 @@ const router = express.Router();
 
 const teacherController = require("../controllers/teacher.controller");
 router.get("/findAll", teacherController.findAll);
-router.get("/findOne/:username", teacherController.findOne);
-router.post("/create", teacherController.create);
-router.patch("/update", teacherController.update);
-router.delete("/delete/:username", teacherController.delete);
+router.get("/getTeacherById/:id", teacherController.getTeacherById);
+router.get(
+  "/getTeacherByUsername/:username",
+  teacherController.getTeacherByUsername
+);
+router.post("/createTeacher", teacherController.createTeacher);
+
+router.patch(
+  "/updateTeacherByUsername",
+  teacherController.updateTeacherByUsername
+);
+router.patch("/updateTeacherById", teacherController.updateTeacherById);
+router.deleteTeacher("/delete/:username", teacherController.deleteTeacher);
 
 module.exports = router;
