@@ -200,3 +200,24 @@ module.exports = {
 //     res.status(400).json({ success: false, error: error.message });
 //   }
 // };
+
+/******************************************************************* */
+// exports.updateTeacher = async (req, res) => {
+//   try {
+//     const teacher = await Teacher.findByUsername(req.params.username);
+//     if (!teacher) {
+//       res.status(404).json({ success: false, error: "Teacher not found" });
+//     } else {
+//       await Teacher.updateOne({ _id: teacher._id }, req.body);
+//       res.status(200).json({ success: true, message: "Teacher updated successfully" });
+//     }
+//   } catch (error) {
+//     res.status(400).json({ success: false, error: error.message });
+//   }
+// };
+
+// //********************************************************* */
+// teacherSchema.statics.findByUsername = async function (username) {
+//   const teacher = await this.findOne({ username });
+//   return teacher;
+// };
