@@ -172,15 +172,15 @@ exports.deleteTeacher = function (req, res) {
   });
 };
 
-module.exports = {
-  findAll,
-  getTeacherById,
-  getTeacherByUsername,
-  createTeacher,
-  updateTeacherByUsername,
-  updateTeacherById,
-  deleteTeacher,
-};
+// module.exports = {
+//   findAll,
+//   getTeacherById,
+//   getTeacherByUsername,
+//   createTeacher,
+//   updateTeacherByUsername,
+//   updateTeacherById,
+//   deleteTeacher,
+// };
 
 /********************************************************************** */
 

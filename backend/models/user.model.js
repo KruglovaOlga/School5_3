@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Username is required field"],
 
       unique: true,
+      sparse: true,
       trim: true,
       lowercase: true,
     },

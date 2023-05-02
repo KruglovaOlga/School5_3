@@ -34,6 +34,7 @@ let emailSchema = new mongoose.Schema({
       "Email address is not valid",
     ],
     unique: true, // make email field unique
+    sparse: true,
   },
 });
 
@@ -58,8 +59,8 @@ const studentSchema = new mongoose.Schema(
     username: {
       type: String,
       required: [true, "Username is required field"],
-
       unique: true,
+      sparse: true,
       trim: true,
       lowercase: true,
     },
@@ -89,7 +90,7 @@ const studentSchema = new mongoose.Schema(
       required: [true, "Class is required field"],
     },
     grades: { type: [gradesSchema], null: true },
-    email: { type: [emailSchema], null: true },
+    email: { type: [emailSchema], null: true }, // underage students not necessary have email
     tuition: { type: [tuitionSchema], null: true },
     address: { type: [addressSchema], null: true },
     phone: phoneSchema,

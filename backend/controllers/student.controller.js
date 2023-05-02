@@ -212,15 +212,15 @@ exports.deleteStudent = function (req, res) {
   });
 };
 
-module.exports = {
-  findAll,
-  getStudentById,
-  getStudentByUsername,
-  createStudent,
-  updateStudentByUsername,
-  updateStudentById,
-  deleteStudent,
-};
+// module.exports = {
+//   findAll,
+//   getStudentById,
+//   getStudentByUsername,
+//   createStudent,
+//   updateStudentByUsername,
+//   updateStudentById,
+//   deleteStudent,
+// };
 
 /*
 In the findAll function, we use await to wait for the Student.find() method 

@@ -3,33 +3,42 @@ const Student = require("../models/student.model");
 const Teacher = require("../models/teacher.model");
 
 // Create a new user
-const createUser = async (req, res) => {
-  const { role, ...userData } = req.body;
+//http://localhost:8080/api/user/createUser/student
+//http://localhost:8080/api/user/createUser/teacher
+exports.createUser = async (req, res) => {
+  //db.collection.dropIndex();
+
+  const category = req.body.category;
+  const userData = req.body;
+
   let newUser;
-  if (role === "student") {
+
+  if (category === "student") {
     newUser = new Student(userData);
-  } else if (role === "teacher") {
+  } else if (category === "teacher") {
     newUser = new Teacher(userData);
   } else {
     newUser = new User(userData);
   }
+
   try {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
+  // db.user.dropIndex();
 };
 
 // Get all users
 exports.getUsers = async (req, res) => {
-  const { role } = req.query;
+  const { category } = req.query;
   let users;
 
   try {
-    if (role === "student") {
+    if (category === "student") {
       users = await Student.findAll();
-    } else if (role === "teacher") {
+    } else if (category === "teacher") {
       users = await Teacher.findAll();
     }
 
@@ -47,14 +56,14 @@ exports.getUsers = async (req, res) => {
 
 // Get a user by ID
 exports.getUserById = async (req, res) => {
-  const { role } = req.query;
+  const { category } = req.query;
   const { id } = req.params;
   let user;
 
   try {
-    if (role === "student") {
+    if (category === "student") {
       user = await Student.findById(id);
-    } else if (role === "teacher") {
+    } else if (category === "teacher") {
       user = await Teacher.findById(id);
     } else {
       user = await User.findById(id);
@@ -101,20 +110,22 @@ exports.getUserByUsername = async (req, res) => {
 };
 
 // Update a user by ID
-const updateUserById = async (req, res) => {
+exports.updateUserById = async (req, res) => {
   const { id } = req.params;
-  const { role, ...userData } = req.body;
+  const category = req.body.category;
+  const userData = req.body;
+
   let updatedUser;
   try {
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (role === "student") {
+    if (category === "student") {
       updatedUser = await Student.findByIdAndUpdate(id, userData, {
         new: true,
       });
-    } else if (role === "teacher") {
+    } else if (category === "teacher") {
       updatedUser = await Teacher.findByIdAndUpdate(id, userData, {
         new: true,
       });
@@ -130,20 +141,22 @@ const updateUserById = async (req, res) => {
 };
 
 // Update a user by Username
-const updateUserByUsername = async (req, res) => {
+exports.updateUserByUsername = async (req, res) => {
   const { username } = req.params;
-  const { role, ...userData } = req.body;
+  const category = req.body.category;
+  const userData = req.body;
+
   let updatedUser;
   try {
     const user = await User.findByUsername(username);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (role === "student") {
+    if (category === "student") {
       updatedUser = await Student.findByUsernameAndUpdate(username, userData, {
         new: true,
       });
-    } else if (role === "teacher") {
+    } else if (category === "teacher") {
       updatedUser = await Teacher.findByUsernameAndUpdate(username, userData, {
         new: true,
       });
@@ -159,16 +172,16 @@ const updateUserByUsername = async (req, res) => {
 };
 
 // Delete a user by ID
-const deleteUserById = async (req, res) => {
+exports.deleteUserById = async (req, res) => {
   const { id } = req.params;
   try {
     const user = await User.getUserById(id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (user.role === "student") {
+    if (user.category === "student") {
       await Student.findByIdAndDelete(id);
-    } else if (user.role === "teacher") {
+    } else if (user.category === "teacher") {
       await Teacher.findByIdAndDelete(id);
     } else {
       await User.findByIdAndDelete(id);
@@ -180,16 +193,16 @@ const deleteUserById = async (req, res) => {
 };
 
 // Delete a user by Username
-const deleteUserByUsername = async (req, res) => {
+exports.deleteUserByUsername = async (req, res) => {
   const { username } = req.params;
   try {
     const user = await User.getUserByUsername(username);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (user.role === "student") {
+    if (user.category === "student") {
       await Student.findByUsernameAndDelete(username);
-    } else if (user.role === "teacher") {
+    } else if (user.category === "teacher") {
       await Teacher.findByUsernameAndDelete(username);
     } else {
       await User.findByUsernameAndDelete(username);
@@ -200,13 +213,13 @@ const deleteUserByUsername = async (req, res) => {
   }
 };
 
-module.exports = {
-  createUser,
-  getUsers,
-  getUserById,
-  getUserByUsername,
-  updateUserById,
-  updateUserByUsername,
-  deleteUserById,
-  deleteUserByUsername,
-};
+// module.exports = {
+//   createUser,
+//   getUsers,
+//   getUserById,
+//   getUserByUsername,
+//   updateUserById,
+//   updateUserByUsername,
+//   deleteUserById,
+//   deleteUserByUsername,
+// };
