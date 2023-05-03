@@ -1,26 +1,6 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
-// const phoneSchema = new mongoose.Schema({
-//   type: {
-//     type: String,
-//     enum: ["home", "mobile"],
-//     required: true,
-//     lowercase: true,
-//   },
-//   number: {
-//     type: String,
-//     required: true,
-//     //unique: true,
-//     validate: {
-//       validator: function (v) {
-//         return /\d{10}/.test(v);
-//       },
-//       message: (props) => `${props.value} is not a valid phone number!`,
-//     },
-//   },
-// });
-
 let addressSchema = new mongoose.Schema(
   {
     area: { type: String },
@@ -84,7 +64,7 @@ const teacherSchema = new mongoose.Schema(
       ],
     },
     address: addressSchema,
-    phone: phoneSchema,
+    phone: [phoneSchema],
   },
   {
     collection: "user",

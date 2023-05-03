@@ -23,20 +23,20 @@ let gradesSchema = new mongoose.Schema(
   { _id: false }
 );
 
-let emailSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    required: true,
-    trim: true,
-    lowercase: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Email address is not valid",
-    ],
-    unique: true, // make email field unique
-    sparse: true,
-  },
-});
+// let emailSchema = new mongoose.Schema({
+//   type: {
+//     type: String,
+//     required: true,
+//     trim: true,
+//     lowercase: true,
+//     match: [
+//       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+//       "Email address is not valid",
+//     ],
+//     unique: true, // make email field unique
+//     sparse: true,
+//   },
+// });
 
 let addressSchema = new mongoose.Schema(
   {
@@ -90,10 +90,23 @@ const studentSchema = new mongoose.Schema(
       required: [true, "Class is required field"],
     },
     grades: { type: [gradesSchema], null: true },
-    email: { type: [emailSchema], null: true }, // underage students not necessary have email
+    email: {
+      type: String,
+      required: [true, "Email is required field"],
+      max: 100,
+      unique: true,
+      sparse: true,
+      trim: true,
+      lowercase: true,
+      // validate: [validateEmail, "Please fill a valid email address"],
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Email address is not valid",
+      ],
+    },
     tuition: { type: [tuitionSchema], null: true },
     address: { type: [addressSchema], null: true },
-    phone: phoneSchema,
+    phone: [phoneSchema],
   },
   {
     collection: "user",
