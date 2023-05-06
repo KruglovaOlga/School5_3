@@ -1,13 +1,13 @@
 const User = require("../models/user.model");
 const Student = require("../models/student.model");
 const Teacher = require("../models/teacher.model");
+const teacherController = require("../controllers/teacher.controller");
+const studentController = require("../controllers/student.controller");
 
 // Create a new user
-//http://localhost:8080/api/user/createUser/student
-//http://localhost:8080/api/user/createUser/teacher
+//http://localhost:3000/api/user/createUser/student
+//http://localhost:3000/api/user/createUser/teacher
 exports.createUser = async (req, res) => {
-  //db.collection.dropIndex();
-
   const category = req.body.category;
   const userData = req.body;
 
@@ -30,31 +30,66 @@ exports.createUser = async (req, res) => {
   // db.user.dropIndex();
 };
 
-// Get all users
-exports.getUsers = async (req, res) => {
-  const { category } = req.query;
-  let users;
-
-  try {
-    if (category === "student") {
-      users = await Student.findAll();
-    } else if (category === "teacher") {
-      users = await Teacher.findAll();
-    }
-
-    res.status(200).json({
-      success: true,
-      data: users,
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: err.message,
-    });
+//http://localhost:3000/api/user/findAll/user?category=teacher
+// http://localhost:3000/api/user/findAll/user?category=student
+exports.findAll = async (req, res) => {
+  // get the category from the request
+  let category = req.query.category;
+  // check if the category is teacher or student
+  if (category === "teacher") {
+    // call the teacherController findAll function
+    teacherController.findAll(req, res);
+  } else if (category === "student") {
+    // call the studentController findAll function
+    studentController.findAll(req, res);
+  } else {
+    // send an error response
+    res.status(400).send("Invalid category");
   }
 };
 
+// exports.findAll = async (req, res) => {
+//   const category = req.body.category;
+//   if (category === "teacher") {
+//     return teacherController.findAll();
+//   } else if (category === "student") {
+//     return studentController.findAll();
+//   } else {
+//     throw new Error("Invalid category");
+//   }
+// };
+
+// Get all users
+// exports.findAll = async (req, res) => {
+//   const { category } = req.query;
+
+//   try {
+//     //let users = await User.findAll({ category: category });
+
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     } else if (category === "student") {
+//       return User.findAll({ where: { category: "student" } });
+//       //users = await Student.findAll();
+//     } else if (category === "teacher") {
+//       return User.findAll({ where: { category: "teacher" } });
+//       //users = await Teacher.findAll();
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       data: users,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       success: false,
+//       message: err.message,
+//     });
+//   }
+// };
+
 // Get a user by ID
+//64526f982043f8d62f01ff89  student
 exports.getUserById = async (req, res) => {
   const { category } = req.query;
   const { id } = req.params;
@@ -95,7 +130,8 @@ exports.getUserById = async (req, res) => {
   we return a 404 error response. If the user is found, 
   we return a 200 response with the user data in the response body.
   */
-
+// http://localhost:3000/api/user//getUserByUsername/Teacher1
+//http://localhost:3000/api/user//getUserByUsername/Student026
 exports.getUserByUsername = async (req, res) => {
   try {
     const username = req.params.username;
@@ -143,7 +179,7 @@ exports.updateUserById = async (req, res) => {
 // Update a user by Username
 exports.updateUserByUsername = async (req, res) => {
   const { username } = req.params;
-  const category = req.body.category;
+  //const category = req.body.category;
   const userData = req.body;
 
   let updatedUser;
@@ -152,16 +188,19 @@ exports.updateUserByUsername = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (category === "student") {
-      updatedUser = await Student.findByUsernameAndUpdate(username, userData, {
-        new: true,
-      });
-    } else if (category === "teacher") {
-      updatedUser = await Teacher.findByUsernameAndUpdate(username, userData, {
-        new: true,
-      });
-    } else {
-      updatedUser = await User.findByUsernameAndUpdate(username, userData, {
+    // Ta parakato tha xreiastoun gia eisagvgh apo thn forma????
+
+    // if (category === "student") {
+    //   updatedUser = await Student.findOneAndUpdate(username, userData, {
+    //     new: true,
+    //   });
+    // } else if (category === "teacher") {
+    //   updatedUser = await Teacher.findOneAndUpdate(username, userData, {
+    //     new: true,
+    //   });
+    // } else
+    {
+      updatedUser = await User.findOneAndUpdate(username, userData, {
         new: true,
       });
     }
