@@ -1,10 +1,27 @@
 const Teacher = require("../models/teacher.model");
 
+// exports.findAll = async function (req, res) {
+//   // find all users with category teacher from the database
+//   users.find({ category: "teacher" }, (err, users) => {
+//     if (err) {
+//       // send an error response
+//       res.status(500).send(err);
+//     } else {
+//       // send a success response with the users data
+//       res.status(200).send(users);
+//     }
+//   });
+// };
+
+// exports.findAll = async function (req, res) {
+//   return User.findAll({ where: { category: "teacher" } });
+// };
+
 exports.findAll = async function (req, res) {
   console.log("Find All Teachers Controller");
 
   try {
-    const results = await Teacher.find({});
+    const results = await Teacher.find({ category: "teacher" });
     res.status(200).json({ status: true, data: results });
     console.log("Success in reading teachers");
   } catch (err) {

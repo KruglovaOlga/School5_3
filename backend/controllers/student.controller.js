@@ -1,10 +1,41 @@
 const Student = require("../models/student.model");
 
+// exports.findAll = async function (req, res) {
+//   // find all users with category student from the database
+//   User.find({ category: "student" }, (err, users) => {
+//     if (err) {
+//       // send an error response
+//       res.status(500).send(err);
+//     } else {
+//       // send a success response with the users data
+//       res.status(200).send(users);
+//     }
+//   });
+// };
+
+// exports.findAll = async function (req, res) {
+//   return User.findAll({ where: { category: "student" } });
+// };
+
+// async function findAll() {
+//   try {
+//     const users = await db
+//       .collection("users")
+//       .find({ category: "student" })
+//       .toArray();
+//     return users;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Could not find students.");
+//   }
+// }
+
+//********************************************* */
 exports.findAll = async function (req, res) {
   console.log("Find All Students Controller");
 
   try {
-    const results = await Student.find({});
+    const results = await Student.find({ category: "student" });
     res.status(200).json({ status: true, data: results });
     console.log("Success in reading students");
   } catch (err) {
@@ -13,10 +44,11 @@ exports.findAll = async function (req, res) {
   }
 };
 
+//*************************************************** */
+
 // exports.findOne = async function (req, res) {
 //   const username = req.params.username;
 //   console.log("Find student with username", username);
-
 //   try {
 //     const result = await Student.findOne({ username: username });
 //     res.status(200).json({ status: true, data: result });
@@ -212,15 +244,15 @@ exports.deleteStudent = function (req, res) {
   });
 };
 
-// module.exports = {
-//   findAll,
+//module.exports = {
+// findAll,
 //   getStudentById,
 //   getStudentByUsername,
 //   createStudent,
 //   updateStudentByUsername,
 //   updateStudentById,
 //   deleteStudent,
-// };
+//};
 
 /*
 In the findAll function, we use await to wait for the Student.find() method 
@@ -236,3 +268,36 @@ is passed as a request parameter in the URL, so we use req.params.id to retrieve
 If you're using a different parameter name or passing the 
 id in a different way, you'll need to adjust the code accordingly.
 */
+
+/************************************* */
+// const Student = require("../models/student");
+
+// exports.getUsers = async (req, res) => {
+//   const { category } = req.query;
+//   let users;
+
+//   try {
+//     if (category === "student") {
+//       users = await Student.findAll();
+//     } else if (category === "teacher") {
+//       // Call Teacher model methods here
+//     }
+
+//     const userById = await Student.findOneById(1);
+//     const userByUsername = await Student.findOneByUsername("johndoe");
+//     const updatedUser = await Student.findOneAndUpdate(1, { name: "Jane Doe" });
+
+//     res.status(200).json({
+//       success: true,
+//       data: users,
+//       userById,
+//       userByUsername,
+//       updatedUser,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       success: false,
+//       message: err.message,
+//     });
+//   }
+// };
