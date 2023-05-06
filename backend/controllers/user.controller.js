@@ -232,7 +232,7 @@ exports.deleteUserById = async (req, res) => {
 };
 
 // Delete a user by Username
-//http://localhost:8080/api/user/delete/username/teacher7
+//http://localhost:3000/api/user/delete/username/teacher7
 exports.deleteUserByUsername = async (req, res) => {
   const { username } = req.params;
   try {
