@@ -178,31 +178,35 @@ exports.updateUserById = async (req, res) => {
 
 // Update a user by Username
 exports.updateUserByUsername = async (req, res) => {
-  const { username } = req.params;
-  //const category = req.body.category;
-  const userData = req.body;
+  const category = req.params.category; // get category from params
+  const username = req.params.username; // get username from params
+
+  // const category = req.body.category;
+
+  // const { username } = req.params;
+
+  // const userData = req.body;
 
   let updatedUser;
   try {
-    const user = await User.findByUsername(username);
+    const user = await User.getUserByUsername(username);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    // Ta parakato tha xreiastoun gia eisagvgh apo thn forma????
 
-    // if (category === "student") {
-    //   updatedUser = await Student.findOneAndUpdate(username, userData, {
-    //     new: true,
-    //   });
-    // } else if (category === "teacher") {
-    //   updatedUser = await Teacher.findOneAndUpdate(username, userData, {
-    //     new: true,
-    //   });
-    // } else
-    {
-      updatedUser = await User.findOneAndUpdate(username, userData, {
+    if (category === "student") {
+      updatedUser = await Student.updateStudentByUsername(username, userData, {
         new: true,
       });
+    } else if (category === "teacher") {
+      updatedUser = await Teacher.updateTeacherByUsername(username, userData, {
+        new: true,
+      });
+
+      // } else {
+      //   updatedUser = await User.findOneAndUpdate(username, userData, {
+      //     new: true,
+      //   });
     }
     res.json(updatedUser);
   } catch (err) {
@@ -268,3 +272,10 @@ exports.deleteUserByUsername = async (req, res) => {
 //   deleteUserById,
 //   deleteUserByUsername,
 // };
+
+/*req.body is used to access the actual
+ form data that you posted, while req.params is used for route parameters
+  that are passed in the URL. For example, if you have the route /user/:name, 
+  then the name property is available as req.params.name. In your case, category 
+  is a route parameter, so you should use req.params.category to access it.
+*/

@@ -3,14 +3,20 @@ const router = express.Router();
 
 const userController = require("../controllers/user.controller");
 router.post("/createUser", userController.createUser); //ok
-router.get("/findAll/:category", userController.findAll);
+router.get("/findAll/:category", userController.findAll); //ok
 router.get("/getUserById", userController.getUserById);
 router.get("/getUserByUsername/:username", userController.getUserByUsername); //ok
 router.patch("/updateUserById/:id/:role", userController.updateUserById);
 router.patch(
-  "/updateUserByUsername/:username/:role",
+  "/updateUserByUsername/:category/:username",
   userController.updateUserByUsername
 );
+
+// router.patch(
+//   "/updateUserByUsername?category=:category&username=:username",
+//   userController.updateUserByUsername
+// );
+
 //router.delete("/delete/:id", userController.deleteUserById);
 //router.delete("/delete/:username", userController.deleteUserByUsername);
 
