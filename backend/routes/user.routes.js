@@ -7,7 +7,7 @@ router.get("/findAll/:category", userController.findAll); //ok
 router.get("/getUserById", userController.getUserById);
 router.get("/getUserByUsername/:username", userController.getUserByUsername); //ok
 router.patch("/updateUserById/:id/:role", userController.updateUserById);
-router.patch(
+router.post(
   "/updateUserByUsername/:category/:username",
   userController.updateUserByUsername
 );

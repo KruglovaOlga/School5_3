@@ -180,28 +180,31 @@ exports.updateUserById = async (req, res) => {
 exports.updateUserByUsername = async (req, res) => {
   const category = req.params.category; // get category from params
   const username = req.params.username; // get username from params
-
-  // const category = req.body.category;
-
-  // const { username } = req.params;
-
-  // const userData = req.body;
-
+  const userData = req.body;
   let updatedUser;
+
   try {
-    const user = await User.getUserByUsername(username);
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     if (category === "student") {
-      updatedUser = await Student.updateStudentByUsername(username, userData, {
-        new: true,
-      });
+      updatedUser = await studentController.updateStudentByUsername(
+        username,
+        userData,
+        {
+          new: true,
+        }
+      );
     } else if (category === "teacher") {
-      updatedUser = await Teacher.updateTeacherByUsername(username, userData, {
-        new: true,
-      });
+      updatedUser = await teacherController.updateTeacherByUsername(
+        username,
+        userData,
+        {
+          new: true,
+        }
+      );
 
       // } else {
       //   updatedUser = await User.findOneAndUpdate(username, userData, {

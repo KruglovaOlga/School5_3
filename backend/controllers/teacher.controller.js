@@ -106,8 +106,10 @@ exports.createTeacher = async (req, res) => {
 };
 
 // update by username
-exports.updateTeacherByUsername = function (req, res) {
+exports.updateTeacherByUsername = async (req, res) => {
   console.log("Update Teacher by username Controller");
+ 
+
   const username = req.body.username;
   const updateTeacher = {
     role: req.body.role,
@@ -136,7 +138,22 @@ exports.updateTeacherByUsername = function (req, res) {
       }
     }
   );
-};
+
+//   try {
+//     const user = await Teacher.findOneAndUpdate(
+//       { username },
+//       { role, category, firstname, lastname, email, address, phone },
+//       { new: true }
+//     );
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+//     res.json(user);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// };
 
 // update by id
 exports.updateTeacherById = async (req, res) => {
