@@ -108,7 +108,6 @@ exports.createTeacher = async (req, res) => {
 // update by username
 exports.updateTeacherByUsername = async (req, res) => {
   console.log("Update Teacher by username Controller");
- 
 
   const username = req.body.username;
   const updateTeacher = {
@@ -138,6 +137,7 @@ exports.updateTeacherByUsername = async (req, res) => {
       }
     }
   );
+};
 
 //   try {
 //     const user = await Teacher.findOneAndUpdate(
@@ -250,8 +250,9 @@ exports.deleteTeacher = function (req, res) {
 //   }
 // };
 
-// //********************************************************* */
+/********************************************************* 
 // teacherSchema.statics.findByUsername = async function (username) {
 //   const teacher = await this.findOne({ username });
 //   return teacher;
 // };
+*/
