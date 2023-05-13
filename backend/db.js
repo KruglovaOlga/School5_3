@@ -43,7 +43,6 @@ mongoose.connection.on("disconnected", () => {
 // const teacher = require("./routes/teacher.routes");
 // app.use("/api/teacher", teacher);
 
-const user = require("./routes/user.routes");
 app.use("/api/user", user);
 
 // const schedule = require("./routes/schedule.routes");
