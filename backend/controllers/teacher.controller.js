@@ -110,6 +110,7 @@ exports.updateTeacherByUsername = async (req, res) => {
   console.log("Update Teacher by username Controller");
 
   const username = req.body.username;
+  //const userData = req.body;
   const updateTeacher = {
     role: req.body.role,
     category: req.body.category,

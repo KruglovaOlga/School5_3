@@ -178,8 +178,8 @@ exports.updateUserById = async (req, res) => {
 
 // Update a user by Username
 exports.updateUserByUsername = async (req, res) => {
-  const category = req.params.category; // get category from params
-  const username = req.params.username; // get username from params
+  const category = req.body.category; // get category from params
+  const username = req.body.username; // get username from params
   const userData = req.body;
   let updatedUser;
 

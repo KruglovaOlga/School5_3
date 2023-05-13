@@ -46,6 +46,9 @@ mongoose.connection.on("disconnected", () => {
 const user = require("./routes/user.routes");
 app.use("/api/user", user);
 
+// const schedule = require("./routes/schedule.routes");
+// app.use("/api/schedule", schedule);
+
 process.on("SIGINT", () => {
   mongoose.connection.close(() => {
     console.log("Mongoose connection closed due to app termination");
