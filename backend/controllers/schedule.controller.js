@@ -136,6 +136,8 @@ exports.deleteSchedule = async (req, res) => {
   }
 };
 
+/*
+
 // get the id of the schedule for group A1 and Math lesson
 const schedule = await Schedule.findOne({ group: "A1", lesson: "Math" });
 const id = schedule._id;
@@ -232,3 +234,4 @@ exports.updateScheduleByDayAndGroup = async (req, res) => {
     });
   }
 };
+*/

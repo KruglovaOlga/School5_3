@@ -37,16 +37,35 @@ mongoose.connection.on("disconnected", () => {
   console.log("Mongoose disconnected");
 });
 
-// const student = require("./routes/student.routes");
-// app.use("/api/student", student);
+const student = require("./routes/student.routes");
+const teacher = require("./routes/teacher.routes");
+const user = require("./routes/user.routes");
+const schedule = require("./routes/schedule.routes");
 
-// const teacher = require("./routes/teacher.routes");
-// app.use("/api/teacher", teacher);
+// // Middleware function
+// app.use((req, res, next) => {
+//   if (req.url.startsWith("/api/user")) {
+//     userRoutes(req, res, next);
+//   } else if (req.url.startsWith("/api/teacher")) {
+//     teacherRoutes(req, res, next);
+//   } else if (req.url.startsWith("/api/student")) {
+//     studentRoutes(req, res, next);
+//   } else if (req.url.startsWith("/api/schedule")) {
+//     scheduleRoutes(req, res, next);
+//   } else {
+//     // If none of the routes match, call next() to move on to the next middleware
+//     next();
+//   }
+// });
+
+//routes
+app.use("/api/student", student);
+
+app.use("/api/teacher", teacher);
 
 app.use("/api/user", user);
 
-// const schedule = require("./routes/schedule.routes");
-// app.use("/api/schedule", schedule);
+app.use("/api/schedule", schedule); //WHY??!!
 
 process.on("SIGINT", () => {
   mongoose.connection.close(() => {

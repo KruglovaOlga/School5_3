@@ -15,6 +15,6 @@ router.patch(
   studentController.updateStudentByUsername
 );
 router.patch("/updateStudentById", studentController.updateStudentById);
-router.deleteStudent("/delete/:username", studentController.deleteStudent);
+//router.deleteStudent("/delete/:username", studentController.deleteStudent);
 
 module.exports = router;
