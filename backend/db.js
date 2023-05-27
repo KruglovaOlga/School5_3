@@ -42,7 +42,7 @@ const teacher = require("./routes/teacher.routes");
 const user = require("./routes/user.routes");
 const schedule = require("./routes/schedule.routes");
 
-// // Middleware function
+// // Middleware function   ΛΑΘΟΣ
 // app.use((req, res, next) => {
 //   if (req.url.startsWith("/api/user")) {
 //     userRoutes(req, res, next);
@@ -59,9 +59,9 @@ const schedule = require("./routes/schedule.routes");
 // });
 
 //routes
-app.use("/api/student", student);
+//app.use("/api/student", student);
 
-app.use("/api/teacher", teacher);
+//app.use("/api/teacher", teacher);
 
 app.use("/api/user", user);
 

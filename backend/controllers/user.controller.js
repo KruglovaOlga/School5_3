@@ -178,17 +178,38 @@ exports.updateUserById = async (req, res) => {
 
 // Update a user by Username
 exports.updateUserByUsername = async (req, res) => {
-  const category = req.body.category; // get category from params
-  const username = req.body.username; // get username from params
+  const category = req.params.category; // get category from params
+  const username = req.params.username; // get username from params
   const userData = req.body;
   let updatedUser;
 
   try {
+    /***************************************THE FIRST */
+    //     node:internal/errors:491
+    //     ErrorCaptureStackTrace(err);
+    //     ^
+
+    // Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    //     at new NodeError (node:internal/errors:400:5)
+    //     at ServerResponse.setHeader (node:_http_outgoing:663:11)
+
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    /******************************* THE SECOND********/
+    //MongooseError('Connection.prototype.close() no longer accepts a callback');
+    //{"status": false, "data": {}}
+
+    // User.findOne({ username }, async (err, user) => {
+    //   if (err) {
+    //     return err;
+    //   }
+    //   if (!user) {
+    //     return new Error("User not found");
+    //   }
+    /******************************** THE END********/
     if (category === "student") {
       updatedUser = await studentController.updateStudentByUsername(
         username,
@@ -212,10 +233,47 @@ exports.updateUserByUsername = async (req, res) => {
       //   });
     }
     res.json(updatedUser);
+    // });
+
+    if (updatedUser) {
+      res.status(200).json({ status: true, data: updatedUser });
+      console.log(`Success in updating user with username ${username}`);
+    } else if (updatedUser == null || updatedUser == undefined) {
+      res.status(404).json({ status: false, data: "user not found" });
+      console.log(`User with username ${username} not found`);
+    } else {
+      res.status(400).json({ status: false, data: "Bad request" });
+      console.log(`Bad request for updating user with username ${username}`);
+    }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ status: false, data: err });
+    console.log(`Problem in updating user with username ${username}`, err);
   }
 };
+
+// exports.updateUserByUsername = function (req, callback) {
+//   const category = req.params.category; // get category from params
+//   const username = req.params.username; // get username from params
+//   const userData = req.body;
+//   let updatedUser;
+
+//   User.findOne({ username }, function (err, user) {
+//     if (err) {
+//       return callback(err);
+//     }
+//     if (!user) {
+//       return callback(new Error("User not found"));
+//     }
+
+//     if (category === "student") {
+//       Student.findOneAndUpdate({ username }, userData, { new: true }, callback);
+//     } else if (category === "teacher") {
+//       Teacher.findOneAndUpdate({ username }, userData, { new: true }, callback);
+//     } else {
+//       User.findOneAndUpdate({ username }, userData, { new: true }, callback);
+//     }
+//   });
+// };
 
 // Delete a user by ID
 exports.deleteUserById = async (req, res) => {

@@ -3,6 +3,7 @@ const Teacher = require("../models/teacher.model");
 const Student = require("../models/student.model");
 
 // create a new schedule document
+//(POST)http://localhost:3000/api/schedule/createSchedule
 exports.createSchedule = async (req, res) => {
   try {
     // get the data from the request body
@@ -47,6 +48,7 @@ exports.createSchedule = async (req, res) => {
 };
 
 // get all schedules from the database
+//(GET)http://localhost:3000/api/schedule/getAllSchedules
 exports.getAllSchedules = async (req, res) => {
   try {
     // find all schedules using the schema
@@ -67,6 +69,21 @@ exports.getAllSchedules = async (req, res) => {
 };
 
 // update a schedule by id
+
+//(PATCH)http://localhost:3000/api/schedule/updateSchedule?_id=6471a80fb8c1bdcb0a800b18
+
+//ACTUALLY DOESN'T UPDATE, BUT "message": "Schedule updated successfully", "data": null
+// {
+//   "day_of_week": 1,
+//   "start_time": "09:00 AM",
+//   "finish_time": "10:30 AM",
+//   "lesson": "Use of English",
+//   "group": "A2",
+//   "classroom": "4",
+//   "teacher": "Diana",
+//   "students": ["Alice", "Thomas", "Charlie"]
+// }
+
 exports.updateSchedule = async (req, res) => {
   try {
     // get the id from the request params
@@ -115,6 +132,10 @@ exports.updateSchedule = async (req, res) => {
 };
 
 // delete a schedule by id
+
+//ACTUALLY DOESN'T DELETE, BUT  message: "Schedule deleted successfully"
+
+//(DELETE)http://localhost:3000/api/schedule/deleteSchedule?_id=6471a80fb8c1bdcb0a800b18
 exports.deleteSchedule = async (req, res) => {
   try {
     // get the id from the request params

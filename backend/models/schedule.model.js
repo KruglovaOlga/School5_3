@@ -8,12 +8,12 @@ const scheduleSchema = new mongoose.Schema({
   },
   start_time: {
     type: String,
-    match: /^\d{2}:\d{2}$/, // regex to match HH:MM format
+    // match: /^\d{2}:\d{2}$/, // regex to match HH:MM format
     required: [true, "Start time is required field"],
   },
   finish_time: {
     type: String,
-    match: /^\d{2}:\d{2}$/, // regex to match HH:MM format
+    //match: /^\d{2}:\d{2}$/, // regex to match HH:MM format
     required: [true, "Finish time is required field"],
   },
   lesson: {

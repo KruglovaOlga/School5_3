@@ -105,40 +105,93 @@ exports.createTeacher = async (req, res) => {
   }
 };
 
-// update by username
-exports.updateTeacherByUsername = async (req, res) => {
-  console.log("Update Teacher by username Controller");
+// Update by username
+exports.updateTeacherByUsername = async (username, userData, res) => {
+  //res added to ensure that the response object is available.
+  console.log("Update Teacher by username", username);
+  try {
+    let result = await Teacher.findOneAndUpdate(
+      { username: username },
+      // { ...userData }, // update all the fields in userData
+      {
+        role: userData.role,
 
-  const username = req.body.username;
-  //const userData = req.body;
-  const updateTeacher = {
-    role: req.body.role,
-    category: req.body.category,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    address: req.body.address,
-    phone: req.body.phone,
-  };
+        category: userData.category,
 
-  Teacher.findOneAndUpdate(
-    { username: username },
-    updateTeacher,
-    { new: true },
-    (err, result) => {
-      if (err) {
-        res.status(400).json({ status: false, data: err });
-        console.log(
-          `Problem in updating teacher with username ${username}`,
-          err
-        );
-      } else {
-        res.status(200).json({ status: true, data: result });
-        console.log(`Success in updating teacher with username ${username}`);
-      }
-    }
-  );
+        firstname: userData.firstname,
+
+        lastname: userData.lastname,
+
+        email: userData.email,
+
+        address: userData.address,
+
+        phone: userData.phone,
+      },
+      { new: true } // Return the updated document
+    );
+
+    //   if (result) {
+    //     res.status(200).json({ status: true, data: result });
+    //     console.log(`Success in updating teacher with username ${username}`);
+    //   } else if (result == null || result == undefined) {
+    //     res.status(404).json({ status: false, data: "Teacher not found" });
+    //     console.log(`Teacher with username ${username} not found`);
+    //   } else {
+    //     res.status(400).json({ status: false, data: "Bad request" });
+    //     console.log(`Bad request for updating teacher with username ${username}`);
+    //   }
+  } catch (err) {
+    res.status(500).json({ status: false, data: err });
+    console.log(`Problem in updating teacher with username ${username}`, err);
+  }
 };
+
+// // update by username
+// exports.updateTeacherByUsername = async (username, userData) => {
+//   console.log("Update Teacher by username ", username);
+
+//   let result = await Teacher.findOneAndUpdate(
+//     { username: username },
+
+// {
+//   role: userData.role,
+
+//   category: userData.category,
+
+//   firstname: userData.firstname,
+
+//   lastname: userData.lastname,
+
+//   email: userData.email,
+
+//   address: userData.address,
+
+//   phone: userData.phone,
+// }
+//   );
+
+//   return result;
+// };
+
+//   Teacher.findOneAndUpdate(
+//     { username: username },
+//     updateTeacher,
+//     { new: true },
+//     (err, result) => {
+//       if (err) {
+//         res.status(400).json({ status: false, data: err });
+//         console.log(
+//           `Problem in updating teacher with username ${username}`,
+//           err
+//         );
+//       } else {
+//         res.status(200).json({ status: true, data: result });
+//         console.log(`Success in updating teacher with username ${username}`);
+//       }
+//     }
+//   );
+// };
 
 //   try {
 //     const user = await Teacher.findOneAndUpdate(

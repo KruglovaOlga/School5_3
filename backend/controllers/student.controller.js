@@ -158,37 +158,112 @@ exports.createStudent = async (req, res) => {
   }
 };
 
-exports.updateStudentByUsername = function (req, res) {
-  const username = req.body.username;
-  const updateStudent = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    class: req.body.class,
-    grades: req.body.grades,
-    email: req.body.email,
-    tuition: req.body.tution,
-    address: req.body.address,
-    phone: req.body.phone,
-  };
+//Update by username
 
-  Student.findOneAndUpdate(
-    { username: username },
-    updateStudent,
-    { new: true },
-    (err, result) => {
-      if (err) {
-        res.status(400).json({ status: false, data: err });
-        console.log(
-          `Problem in updating student with username ${username}`,
-          err
-        );
-      } else {
-        res.status(200).json({ status: true, data: result });
-        console.log(`Success in updating student with username ${username}`);
-      }
-    }
-  );
+//http://localhost:8080/api/user/updateUserByUsername/student/student015
+// {
+
+//   "username":"student015",
+//   "role": "reader",
+//   "category": "student",
+//   "firstname":"Alex",
+//   "lastname": "Windos",
+//   "class":"C1",
+//   "grades":[
+//       {
+//           "semester": "1",
+//       "listening": "96",
+//       "writing": "91",
+//       "speaking": "100",
+//       "reading": "100",
+//       "grammar": "94"}
+//   ],
+//   "email":"windos015@fls.gr",
+//   "tuition":[
+//       {"installment": "3",
+//       "amount": "54,00",
+//       "date": "21-12-23",
+//       "status":"true" }
+//   ],
+//       "address": [
+//           {"area": "area9",
+//           "road": "road9"}
+//       ],
+//       "phone": [
+//           {"home": "6939153399",
+//           "mobile": "21099015399"}
+//       ]
+//   }
+exports.updateStudentByUsername = async (username, userData, res) => {
+  console.log("Update Student by Usename", username);
+  try {
+    let updatedStudent = await Student.findOneAndUpdate(
+      { username: username },
+      {
+        role: userData.role,
+
+        category: userData.category,
+
+        firstname: userData.firstname,
+
+        lastname: userData.lastname,
+        class: userData.class,
+        grades: userData.grades,
+
+        email: userData.email,
+        tuition: userData.tuition,
+
+        address: userData.address,
+
+        phone: userData.phone,
+      },
+      { new: true }
+    );
+
+    // if (updatedStudent) {
+    //   res.status(200).json({ success: true, data: updatedStudent });
+    //   console.log(`Success in updating student with username ${username}`);
+    // } else {
+    //   res.status(404).json({ success: false, error: "Student not found" });
+    //   console.log(`Student with username ${username} not found`);
+    // }
+  } catch (err) {
+    res.status(500).json({ status: false, data: err });
+    console.log(`Error in updating student with username ${username}`, err);
+  }
 };
+
+// exports.updateStudentByUsername = function (req, res) {
+//   const username = req.body.username;
+//   const updateStudent = {
+//     firstname: req.body.firstname,
+//     lastname: req.body.lastname,
+//     class: req.body.class,
+//     grades: req.body.grades,
+//     email: req.body.email,
+//     tuition: req.body.tution,
+//     address: req.body.address,
+//     phone: req.body.phone,
+//   };
+
+//   Student.findOneAndUpdate(
+//     { username: username },
+//     updateStudent,
+//     { new: true },
+//     (err, result) => {
+//       if (err) {
+//         res.status(400).json({ status: false, data: err });
+//         console.log(
+//           `Problem in updating student with username ${username}`,
+//           err
+//         );
+//       } else {
+//         res.status(200).json({ status: true, data: result });
+//         console.log(`Success in updating student with username ${username}`);
+//       }
+//     }
+//   );
+// };
 
 // update by id
 exports.updateStudentById = async (req, res) => {
