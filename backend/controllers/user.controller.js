@@ -5,8 +5,26 @@ const teacherController = require("../controllers/teacher.controller");
 const studentController = require("../controllers/student.controller");
 
 // Create a new user
-//http://localhost:3000/api/user/createUser/student
+//(POST)http://localhost:3000/api/user/createUser/student
 //http://localhost:3000/api/user/createUser/teacher
+// {
+//   "username":"teacher7",
+//   "password":"Teacher",
+//   "role":"editor",
+//   "category":"teacher",
+//   "firstname":"Kosmas",
+//   "lastname":"Mavidis",
+//   "email":"teacher7@fls.gr",
+//   "address":
+//              {"area": "area7",
+//              "road": "road7"}
+//          ,
+//   "phone": [
+//              {"home": "6937753377",
+//              "mobile": "21077015377"}
+//   ]
+//   }
+
 exports.createUser = async (req, res) => {
   const category = req.body.category;
   const userData = req.body;
@@ -27,7 +45,6 @@ exports.createUser = async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-  // db.user.dropIndex();
 };
 
 //http://localhost:3000/api/user/findAll/user?category=teacher
@@ -48,62 +65,92 @@ exports.findAll = async (req, res) => {
   }
 };
 
-// exports.findAll = async (req, res) => {
-//   const category = req.body.category;
-//   if (category === "teacher") {
-//     return teacherController.findAll();
-//   } else if (category === "student") {
-//     return studentController.findAll();
-//   } else {
-//     throw new Error("Invalid category");
-//   }
-// };
+//Returns User Id for using in other functions
+//http://localhost:3000/api/user/getUserId?category=teacher&lastname=Avramidoy&firstname=Elisavet
+// //{  "message": "Something went wrong",  "error": {}}
+// exports.getUserId = async (req, res) => {
+//   // Get the query parameters
+//   const lastname = req.query.lastname;
+//   const firstname = req.query.firstname;
+//   const category = req.query.category; // get category from query
 
-// Get all users
-// exports.findAll = async (req, res) => {
-//   const { category } = req.query;
+//   // Create a filter object
+//   const filter = {
+//     name: {
+//       lastname: lastname,
+//       firstname: firstname,
+//     },
+//   };
+
+//   // Find the user by the filter object
+//   let user = await User.findOne(filter); // use let instead of const
 
 //   try {
-//     //let users = await User.findAll({ category: category });
+//     // Find the user in the database based on the provided lastname and firstname
+//     // const user = await User.findOne(lastname, firstname);
+//     if (category === "student") {
+//       user = await Student.findOne(filter);
+//       return res.json({ id: user._id }); // send response to client
+//     } else if (category === "teacher") {
+//       user = await Teacher.findOne(filter);
+//       return res.json({ id: user._id }); // send response to client
+//     }
 
 //     if (!user) {
 //       return res.status(404).json({ message: "User not found" });
-//     } else if (category === "student") {
-//       return User.findAll({ where: { category: "student" } });
-//       //users = await Student.findAll();
-//     } else if (category === "teacher") {
-//       return User.findAll({ where: { category: "teacher" } });
-//       //users = await Teacher.findAll();
 //     }
 
-//     res.status(200).json({
-//       success: true,
-//       data: users,
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       success: false,
-//       message: err.message,
-//     });
+//     // Return the user's id
+//     res.json({ id: user._id });
+//   } catch (error) {
+//     res.status(500).json({ message: "Something went wrong", error });
 //   }
 // };
 
-// Get a user by ID
-//64526f982043f8d62f01ff89  student
-exports.getUserById = async (req, res) => {
-  const { category } = req.query;
-  const { id } = req.params;
-  let user;
-
+//(GET)http://localhost:3000/api/user/getUserId/teacher/Avramidoy/Elisavet
+exports.getUserId = async (req, res) => {
   try {
-    if (category === "student") {
-      user = await Student.findById(id);
-    } else if (category === "teacher") {
-      user = await Teacher.findById(id);
-    } else {
-      user = await User.findById(id);
-    }
+    // Get the query
+    const category = req.params.category;
+    const lastname = req.params.lastname;
+    const firstname = req.params.firstname;
 
+    let user;
+
+    //const user = await User.findOne({ lastname: lastname , firstname: firstname, category: category });
+
+    // const user = await User.findOne({ $or: [{ lastname: lastname }, { firstname: firstname }, { category: category }, { email: email }] });
+    if (category === "student") {
+      user = await Student.findOne({
+        lastname: lastname,
+        firstname: firstname,
+        category: category,
+      });
+      return res.json({ id: user._id }); // send response to client
+    } else if (category === "teacher") {
+      user = await Teacher.findOne({
+        lastname: lastname,
+        firstname: firstname,
+        category: category,
+      });
+      return res.json({ id: user._id }); // send response to client
+    }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// Get a user by ID
+//(GET)http://localhost:3000/api/user/getUserById/6450b9735da248f5e9a3091b
+
+exports.getUserById = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const user = await User.findOne({ _id: id });
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -123,15 +170,8 @@ exports.getUserById = async (req, res) => {
   }
 };
 
-/*
-  In this method, we first extract the username from the request 
-  parameters. We then use the findOne() method of the User model 
-  to find the user by their username. If the user is not found, 
-  we return a 404 error response. If the user is found, 
-  we return a 200 response with the user data in the response body.
-  */
-// http://localhost:3000/api/user//getUserByUsername/Teacher1
-//http://localhost:3000/api/user//getUserByUsername/Student026
+// http://localhost:3000/api/user//getUserByUsername/teacher1
+//http://localhost:3000/api/user//getUserByUsername/student002
 exports.getUserByUsername = async (req, res) => {
   try {
     const username = req.params.username;
@@ -146,12 +186,16 @@ exports.getUserByUsername = async (req, res) => {
 };
 
 // Update a user by ID
+//(PUT)http://localhost:3000/api/user/updateUserById/6450c3160abf1770e90f0b3c/teacher
 exports.updateUserById = async (req, res) => {
-  const { id } = req.params;
-  const category = req.body.category;
+  const category = req.params.category; // get category from params
+
+  const id = req.params.id; // get username from params
+
   const userData = req.body;
 
   let updatedUser;
+
   try {
     const user = await User.findById(id);
     if (!user) {
@@ -177,43 +221,45 @@ exports.updateUserById = async (req, res) => {
 };
 
 // Update a user by Username
+// {
+//   "username":"teacher6",
+//   "role":"editor",
+//   "category":"teacher",
+//   "firstname":"Kyriaki",
+//   "lastname":"Moustaki",
+//   "email":"teacher6@fls.gr",
+//   "address": [
+//              {"area": "area6",
+//              "road": "road6"}
+//          ],
+//   "phone": [
+//              {"home": "6936653366",
+//              "mobile": "21066015366"}
+//          ]
+//   }
+
 exports.updateUserByUsername = async (req, res) => {
   const category = req.params.category; // get category from params
+
   const username = req.params.username; // get username from params
+
   const userData = req.body;
+
   let updatedUser;
 
   try {
-    /***************************************THE FIRST */
-    //     node:internal/errors:491
-    //     ErrorCaptureStackTrace(err);
-    //     ^
+    const user = await User.findOne({ username: username });
 
-    // Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-    //     at new NodeError (node:internal/errors:400:5)
-    //     at ServerResponse.setHeader (node:_http_outgoing:663:11)
-
-    const user = await User.findOne({ username });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    /******************************* THE SECOND********/
-    //MongooseError('Connection.prototype.close() no longer accepts a callback');
-    //{"status": false, "data": {}}
-
-    // User.findOne({ username }, async (err, user) => {
-    //   if (err) {
-    //     return err;
-    //   }
-    //   if (!user) {
-    //     return new Error("User not found");
-    //   }
-    /******************************** THE END********/
     if (category === "student") {
       updatedUser = await studentController.updateStudentByUsername(
         username,
+
         userData,
+
         {
           new: true,
         }
@@ -221,117 +267,83 @@ exports.updateUserByUsername = async (req, res) => {
     } else if (category === "teacher") {
       updatedUser = await teacherController.updateTeacherByUsername(
         username,
-        userData,
-        {
-          new: true,
-        }
+        userData
       );
-
-      // } else {
-      //   updatedUser = await User.findOneAndUpdate(username, userData, {
-      //     new: true,
-      //   });
     }
-    res.json(updatedUser);
-    // });
+    // check the value of updatedUser and send appropriate response
+    //     if (updatedUser) {
+    //       // if updatedUser is not null or undefined, send 200 status and updated user data
+    //       res.status(200).json({ status: true, data: updatedUser });
+    //       console.log(`Success in updating user with username ${username}`);
+    //     } else {
+    //       // if updatedUser is null or undefined, send 404 status and error message
+    //       res.status(404).json({ status: false, data: "user not found" });
+    //       console.log(`User with username ${username} not found`);
+    //     }
+    //
 
-    if (updatedUser) {
-      res.status(200).json({ status: true, data: updatedUser });
-      console.log(`Success in updating user with username ${username}`);
-    } else if (updatedUser == null || updatedUser == undefined) {
-      res.status(404).json({ status: false, data: "user not found" });
-      console.log(`User with username ${username} not found`);
-    } else {
-      res.status(400).json({ status: false, data: "Bad request" });
-      console.log(`Bad request for updating user with username ${username}`);
-    }
-  } catch (err) {
-    res.status(500).json({ status: false, data: err });
-    console.log(`Problem in updating user with username ${username}`, err);
-  }
-};
-
-// exports.updateUserByUsername = function (req, callback) {
-//   const category = req.params.category; // get category from params
-//   const username = req.params.username; // get username from params
-//   const userData = req.body;
-//   let updatedUser;
-
-//   User.findOne({ username }, function (err, user) {
-//     if (err) {
-//       return callback(err);
-//     }
-//     if (!user) {
-//       return callback(new Error("User not found"));
-//     }
-
-//     if (category === "student") {
-//       Student.findOneAndUpdate({ username }, userData, { new: true }, callback);
-//     } else if (category === "teacher") {
-//       Teacher.findOneAndUpdate({ username }, userData, { new: true }, callback);
-//     } else {
-//       User.findOneAndUpdate({ username }, userData, { new: true }, callback);
-//     }
-//   });
-// };
-
-// Delete a user by ID
-exports.deleteUserById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.getUserById(id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    if (user.category === "student") {
-      await Student.findByIdAndDelete(id);
-    } else if (user.category === "teacher") {
-      await Teacher.findByIdAndDelete(id);
-    } else {
-      await User.findByIdAndDelete(id);
-    }
-    res.json({ message: "User deleted successfully" });
+    res.status(200).json(updatedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Delete a user by Username
-//http://localhost:3000/api/user/delete/username/teacher7
+// Delete a user by ID
+//http://localhost:3000/api/user/deleteUser/id/6453c1f53514d7a815fc44a0
+exports.deleteUserById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    } else {
+      await User.findOneAndRemove({ _id: id }, { new: false });
+    }
+    res.json({ message: "User deleted successfully", data: user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//(DELETE)http://localhost:3000/api/user/delete/username/student015
 exports.deleteUserByUsername = async (req, res) => {
   const { username } = req.params;
+  // const username = req.params.username;
+  //   const user = await User.findOne({ username });
   try {
     const user = await User.findOne({ username: username });
 
     //const user = await User.getUserByUsername(username);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
-      // }
-      // if (user.category === "student") {
-      //   await Student.findOneAndRemove({ username: username });
-      //   //await Student.findByUsernameAndDelete(username);
-      // } else if (user.category === "teacher") {
-      //   await Teacher.findOneAndRemove({ username: username });
-      //   //await Teacher.findByUsernameAndDelete(username);
     } else {
-      await User.findOneAndRemove({ username: username });
-      //await User.findByUsernameAndDelete(username);
+      await User.findOneAndRemove({ username: username }, { new: false });
     }
-    res.json({ message: "User deleted successfully" });
+    res.json({ message: "User deleted successfully", data: user });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
-// module.exports = {
-//   createUser,
-//   getUsers,
-//   getUserById,
-//   getUserByUsername,
-//   updateUserById,
-//   updateUserByUsername,
-//   deleteUserById,
-//   deleteUserByUsername,
+// Delete a user by Username
+//http://localhost:3000/api/user/delete/username/teacher7
+// exports.deleteUserByUsername = async (req, res) => {
+//   const { username } = req.params;
+//   try {
+//     const user = await User.findOneAndRemove(
+//       { username: username },
+//       { new: false }
+//     );
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     } else {
+//       res.json({ message: "User deleted successfully", data: user });
+//     }
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
 // };
 
 /*req.body is used to access the actual

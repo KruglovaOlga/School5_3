@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 3000;
 //const port = 8080;
@@ -6,6 +7,7 @@ const port = 3000;
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors()); // This will enable CORS for all routes
 
 require("dotenv").config();
 
@@ -37,26 +39,10 @@ mongoose.connection.on("disconnected", () => {
   console.log("Mongoose disconnected");
 });
 
-const student = require("./routes/student.routes");
-const teacher = require("./routes/teacher.routes");
+//const student = require("./routes/student.routes");
+//const teacher = require("./routes/teacher.routes");
 const user = require("./routes/user.routes");
 const schedule = require("./routes/schedule.routes");
-
-// // Middleware function   ΛΑΘΟΣ
-// app.use((req, res, next) => {
-//   if (req.url.startsWith("/api/user")) {
-//     userRoutes(req, res, next);
-//   } else if (req.url.startsWith("/api/teacher")) {
-//     teacherRoutes(req, res, next);
-//   } else if (req.url.startsWith("/api/student")) {
-//     studentRoutes(req, res, next);
-//   } else if (req.url.startsWith("/api/schedule")) {
-//     scheduleRoutes(req, res, next);
-//   } else {
-//     // If none of the routes match, call next() to move on to the next middleware
-//     next();
-//   }
-// });
 
 //routes
 //app.use("/api/student", student);
@@ -65,7 +51,7 @@ const schedule = require("./routes/schedule.routes");
 
 app.use("/api/user", user);
 
-app.use("/api/schedule", schedule); //WHY??!!
+app.use("/api/schedule", schedule);
 
 process.on("SIGINT", () => {
   mongoose.connection.close(() => {

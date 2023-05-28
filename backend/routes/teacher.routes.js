@@ -14,7 +14,7 @@ router.patch(
   "/updateTeacherByUsername",
   teacherController.updateTeacherByUsername
 );
-router.patch("/updateTeacherById", teacherController.updateTeacherById);
+router.patch("/updateTeacherById/:id", teacherController.updateTeacherById);
 //router.deleteTeacher("/delete/:username", teacherController.deleteTeacher);
 
 module.exports = router;

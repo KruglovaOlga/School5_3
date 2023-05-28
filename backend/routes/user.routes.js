@@ -2,25 +2,36 @@ const express = require("express");
 const router = express.Router();
 
 const userController = require("../controllers/user.controller");
-router.post("/createUser", userController.createUser); //ok
+router.post("/createUser/:category", userController.createUser); //ok
+
 router.get("/findAll/:category", userController.findAll); //ok
-router.get("/getUserById", userController.getUserById);
+
+// using route parameter
+router.get(
+  "/getUserId/:category/:lastname/:firstname",
+  userController.getUserId
+); //ok
+
+// // using query parameter
+// router.get("/getUserId", userController.getUserId);
+
+router.get("/getUserById/:id", userController.getUserById); //ok
+
 router.get("/getUserByUsername/:username", userController.getUserByUsername); //ok
-router.patch("/updateUserById/:id/:role", userController.updateUserById);
-router.patch(
-  "/updateUserByUsername/:category/:username",
+
+router.put("/updateUserById/:id/:category", userController.updateUserById); //ok
+
+router.put(
+  "/updateUserByUsername/:username/:category",
   userController.updateUserByUsername
-);
+); //ok
 
 // router.patch(
 //   "/updateUserByUsername?category=:category&username=:username",
 //   userController.updateUserByUsername
 // );
 
-//router.delete("/delete/:id", userController.deleteUserById);
-//router.delete("/delete/:username", userController.deleteUserByUsername);
-
-router.delete("/delete/id/:id", userController.deleteUserById);
+router.delete("/deleteUser/id/:id", userController.deleteUserById);
 
 router.delete(
   "/delete/username/:username",
