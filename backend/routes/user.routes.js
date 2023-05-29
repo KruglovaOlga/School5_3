@@ -19,9 +19,9 @@ router.get("/getUserById/:id", userController.getUserById); //ok
 
 router.get("/getUserByUsername/:username", userController.getUserByUsername); //ok
 
-router.put("/updateUserById/:id/:category", userController.updateUserById); //ok
+router.patch("/updateUserById/:id/:category", userController.updateUserById); //ok
 
-router.put(
+router.patch(
   "/updateUserByUsername/:username/:category",
   userController.updateUserByUsername
 ); //ok
@@ -31,7 +31,7 @@ router.put(
 //   userController.updateUserByUsername
 // );
 
-router.delete("/deleteUser/id/:id", userController.deleteUserById);
+router.delete("/deleteUser/id/:id", userController.deleteUserById); //ok
 
 router.delete(
   "/delete/username/:username",

@@ -4,6 +4,16 @@ const Student = require("../models/student.model");
 
 // create a new schedule document
 //(POST)http://localhost:3000/api/schedule/createSchedule
+// {
+//   "day_of_week":6,
+//   "start_time": "12:00",
+//   "finish_time": "13:00",
+//   "lesson": "Delete",
+//   "group": "A3",
+//   "classroom": "class3",
+//   "teacher": "teacher8",
+//   "students": ["student010","student035"]
+// }
 exports.createSchedule = async (req, res) => {
   try {
     // get the data from the request body
@@ -68,6 +78,36 @@ exports.getAllSchedules = async (req, res) => {
   }
 };
 
+// Find a schedule by day_of_week, teacher, and group
+//http://localhost:3000/api/schedule/findScheduleId/1/teacher1/B1
+// "error": "Schedule not found"
+exports.findScheduleId = async (req, res) => {
+  try {
+    const day_of_week = req.params.day_of_week;
+    const teacher = req.params.teacher;
+    const group = req.params.group;
+
+    let schedule = await Schedule.findOne({
+      day_of_week: day_of_week,
+      teacher: teacher,
+      group: group,
+      // $or: [
+      //   { day_of_week: day_of_week },
+      //   { teacher: teacher },
+      //   { group: group },
+      // ],
+    });
+
+    if (!schedule) {
+      return res.status(404).json({ error: "Schedule not found" });
+    }
+
+    res.json(schedule._id);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve schedule" });
+  }
+};
+
 // update a schedule by id
 
 //(PATCH)http://localhost:3000/api/schedule/updateSchedule?_id=6471a80fb8c1bdcb0a800b18
@@ -84,40 +124,24 @@ exports.getAllSchedules = async (req, res) => {
 //   "students": ["Alice", "Thomas", "Charlie"]
 // }
 
+//(PATCH)http://localhost:3000/api/schedule/updateSchedule/1/teacher1/B1
+//"error": "Schedule not found"
 exports.updateSchedule = async (req, res) => {
   try {
     // get the id from the request params
-    const { id } = req.params;
+    const day_of_week = req.params.day_of_week;
+    const teacher = req.params.teacher;
+    const group = req.params.group;
+    const scheduleData = req.body;
 
-    // get the data from the request body
-    const {
-      day_of_week,
-      start_time,
-      finish_time,
-      lesson,
-      group,
-      classroom,
-      teacher,
-      students,
-    } = req.body;
-
-    // find and update the schedule by id using the schema
-    const updatedSchedule = await Schedule.findByIdAndUpdate(
-      id,
-      {
-        day_of_week,
-        start_time,
-        finish_time,
-        lesson,
-        group,
-        classroom,
-        teacher,
-        students,
-      },
-      { new: true }
-    ); // return the updated document
-
-    // send a success response with the updated schedule object
+    let updatedSchedule = await Schedule.findOneAndUpdate(
+      { day_of_week: day_of_week, teacher: teacher, group: group },
+      { ...scheduleData },
+      { new: true } // return the updated document
+    );
+    if (!updatedSchedule) {
+      return res.status(404).json({ error: "Schedule not found" });
+    }
     res.status(200).json({
       message: "Schedule updated successfully",
       data: updatedSchedule,
@@ -132,6 +156,7 @@ exports.updateSchedule = async (req, res) => {
 };
 
 // delete a schedule by id
+//PLEASE, CHOOSE TO DELETE ONLY THOSE DOCS, WHERE "lesson": "Delete"
 
 //ACTUALLY DOESN'T DELETE, BUT  message: "Schedule deleted successfully"
 

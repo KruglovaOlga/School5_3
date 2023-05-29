@@ -66,59 +66,15 @@ exports.findAll = async (req, res) => {
 };
 
 //Returns User Id for using in other functions
-//http://localhost:3000/api/user/getUserId?category=teacher&lastname=Avramidoy&firstname=Elisavet
-// //{  "message": "Something went wrong",  "error": {}}
-// exports.getUserId = async (req, res) => {
-//   // Get the query parameters
-//   const lastname = req.query.lastname;
-//   const firstname = req.query.firstname;
-//   const category = req.query.category; // get category from query
-
-//   // Create a filter object
-//   const filter = {
-//     name: {
-//       lastname: lastname,
-//       firstname: firstname,
-//     },
-//   };
-
-//   // Find the user by the filter object
-//   let user = await User.findOne(filter); // use let instead of const
-
-//   try {
-//     // Find the user in the database based on the provided lastname and firstname
-//     // const user = await User.findOne(lastname, firstname);
-//     if (category === "student") {
-//       user = await Student.findOne(filter);
-//       return res.json({ id: user._id }); // send response to client
-//     } else if (category === "teacher") {
-//       user = await Teacher.findOne(filter);
-//       return res.json({ id: user._id }); // send response to client
-//     }
-
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
-
-//     // Return the user's id
-//     res.json({ id: user._id });
-//   } catch (error) {
-//     res.status(500).json({ message: "Something went wrong", error });
-//   }
-// };
-
 //(GET)http://localhost:3000/api/user/getUserId/teacher/Avramidoy/Elisavet
+//http://localhost:3000/api/user/getUserId/student/Karamanidis/George
 exports.getUserId = async (req, res) => {
   try {
-    // Get the query
     const category = req.params.category;
     const lastname = req.params.lastname;
     const firstname = req.params.firstname;
 
     let user;
-
-    //const user = await User.findOne({ lastname: lastname , firstname: firstname, category: category });
-
     // const user = await User.findOne({ $or: [{ lastname: lastname }, { firstname: firstname }, { category: category }, { email: email }] });
     if (category === "student") {
       user = await Student.findOne({
@@ -186,7 +142,43 @@ exports.getUserByUsername = async (req, res) => {
 };
 
 // Update a user by ID
-//(PUT)http://localhost:3000/api/user/updateUserById/6450c3160abf1770e90f0b3c/teacher
+//(PATCH)http://localhost:3000/api/user/updateUserById/6450c3160abf1770e90f0b3c/teacher
+//http://localhost:3000/api/user/updateUserById/645270472043f8d62f01ff91/student
+// {
+
+//   "username":"student006",
+//   "role": "reader",
+//   "category": "student",
+//   "firstname":"George",
+//   "lastname": "Karamanidis",
+//   "class":"JunB2",
+//   "grades":[
+//       {
+//           "semester": "1",
+//       "listening": "96",
+//       "writing": "91",
+//       "speaking": "100",
+//       "reading": "100",
+//       "grammar": "94"}
+//   ],
+//   "email":"karamanidis006@fls.gr",
+//   "tuition":[
+//       {"installment": "3",
+//       "amount": "54,00",
+//       "date": "2023-05-24",
+//       "status":"true" }
+//   ],
+//       "address": [
+//           {"area": "area6",
+//           "road": "road06"}
+//       ],
+//       "phone": [
+//           {"home": "6939153366",
+//           "mobile": "21099015366"}
+//       ]
+
+// }
+
 exports.updateUserById = async (req, res) => {
   const category = req.params.category; // get category from params
 
@@ -237,7 +229,8 @@ exports.updateUserById = async (req, res) => {
 //              "mobile": "21066015366"}
 //          ]
 //   }
-
+//(PATCH)http://localhost:3000/api/user/updateUserByUsername/student010/student
+//(PATCH)http://localhost:3000/api/user/updateUserByUsername/teacher8/teacher
 exports.updateUserByUsername = async (req, res) => {
   const category = req.params.category; // get category from params
 
