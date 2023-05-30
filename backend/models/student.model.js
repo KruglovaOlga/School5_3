@@ -86,7 +86,7 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: [true, "Lastname is required field"],
     },
-    class: {
+    group: {
       type: String,
       required: [true, "Class is required field"],
     },
