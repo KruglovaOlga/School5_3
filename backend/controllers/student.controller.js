@@ -122,6 +122,10 @@ exports.updateStudentByUsername = async (username, userData, res) => {
   }
 };
 
+exports.findNoPaidInstallment = async (req, res) => {};
+exports.getAllGrades = async (req, res) => {};
+exports.getGradesBySemester = async (req, res) => {};
+
 // exports.findStudentsByGroup = async (req, res) => {
 //   const { group } = req.params; // get the group parameter from the request
 //   try {

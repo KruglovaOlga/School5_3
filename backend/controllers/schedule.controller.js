@@ -155,6 +155,91 @@ exports.updateSchedule = async (req, res) => {
   }
 };
 
+//error
+exports.updateScheduleByDayAndGroup = async (
+  day_of_week,
+  group,
+  scheduleData,
+  res
+) => {
+  try {
+    let updatedSchedule = await Schedule.findOneAndUpdate(
+      { day_of_week: day_of_week, group: group },
+      { ...scheduleData },
+      { new: true } // return the updated document
+    );
+  } catch (err) {
+    res.status(500).json({ status: false, data: err });
+    console.log(
+      `Error in updating schedule with day ${day_of_week} and group ${group}`,
+      err
+    );
+  }
+};
+
+// //http://localhost:3000/api/schedule/updateScheduleByDayAndGroup?day_of_week=1&group=B1
+// //"error": "Schedule not found"
+// // update a schedule by day of week and group
+// exports.updateScheduleByDayAndGroup = async (req, res) => {
+//   try {
+//     // get the day of week and group from the request query
+//     const { day_of_week, group } = req.query;
+
+//     // convert the day of week to a number
+//     const day = Number(day_of_week);
+
+//     // get the data from the request body
+//     const { start_time, finish_time, lesson, classroom, teacher, students } =
+//       req.body;
+
+//     // find and update the schedule by day of week and group using the schema
+//     const updatedSchedule = await Schedule.findOneAndUpdate(
+//       { day_of_week, group },
+//       {
+//         start_time,
+//         finish_time,
+//         lesson,
+//         classroom,
+//         teacher,
+//         students,
+//       },
+//       { new: true }
+//     ); // return the updated document
+
+//     // send a success response with the updated schedule object
+//     res.status(200).json({
+//       message: "Schedule updated successfully",
+//       data: updatedSchedule,
+//     });
+//   } catch (error) {
+//     // handle any errors
+//     res.status(500).json({
+//       message: "Something went wrong",
+//       error,
+//     });
+//   }
+// };
+
+// // get the day of week and group from the request query
+// const { day_of_week, group } = req.query;
+
+// // convert the day of week to a number
+// const day = Number(day_of_week);
+
+// // find and update the schedule by day of week and group using the schema
+// const updatedSchedule = await Schedule.updateOne(
+//   { day_of_week: day, group },
+//   {
+//     start_time,
+//     finish_time,
+//     lesson,
+//     classroom,
+//     teacher,
+//     students,
+//   },
+//   { new: true }
+// );
+
 // delete a schedule by id
 //PLEASE, CHOOSE TO DELETE ONLY THOSE DOCS, WHERE "lesson": "Delete"
 
@@ -181,6 +266,11 @@ exports.deleteSchedule = async (req, res) => {
     });
   }
 };
+
+exports.findAllGroupsInDay = async (req, res) => {};
+exports.findAllStudentsInGroup = async (req, res) => {};
+exports.findLesson = async (req, res) => {};
+exports.findTeacherGroup = async (req, res) => {};
 
 /*
 
