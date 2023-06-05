@@ -24,4 +24,11 @@ router.patch(
 
 router.delete("/deleteSchedule", scheduleController.deleteSchedule);
 
+router.get("/groups", scheduleController.findAllGroupsInDay);
+router.get("/students", scheduleController.findAllStudentsInGroup);
+router.get("/lesson", scheduleController.findLesson);
+router.get("/:scheduleId/teacher-group", scheduleController.findTeacherGroup);
+router.get("/teacher/:teacher", scheduleController.findSchedulesByTeacher);
+router.get("/group/:group", scheduleController.findSchedulesByGroup);
+
 module.exports = router;

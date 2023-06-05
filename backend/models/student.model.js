@@ -24,21 +24,6 @@ let gradesSchema = new mongoose.Schema(
   { _id: false }
 );
 
-// let emailSchema = new mongoose.Schema({
-//   type: {
-//     type: String,
-//     required: true,
-//     trim: true,
-//     lowercase: true,
-//     match: [
-//       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-//       "Email address is not valid",
-//     ],
-//     unique: true, // make email field unique
-//     sparse: true,
-//   },
-// });
-
 let addressSchema = new mongoose.Schema(
   {
     area: { type: String },

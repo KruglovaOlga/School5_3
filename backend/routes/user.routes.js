@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const userController = require("../controllers/user.controller");
+const studentController = require("../controllers/student.controller");
 router.post("/createUser/:category", userController.createUser); //ok
 
 router.get("/findAll/:category", userController.findAll); //ok
@@ -37,6 +38,12 @@ router.delete(
   "/delete/username/:username",
   userController.deleteUserByUsername
 ); //ok
+
+//the below routes refers to student
+router.get("/unpaid", studentController.findNoPaidInstallment);
+router.get("/grades", studentController.getAllGrades);
+router.get("/grades/semester", studentController.getGradesBySemester);
+router.get("/group/:group", studentController.findStudentsByGroup);
 
 module.exports = router;
 

@@ -267,10 +267,90 @@ exports.deleteSchedule = async (req, res) => {
   }
 };
 
-exports.findAllGroupsInDay = async (req, res) => {};
-exports.findAllStudentsInGroup = async (req, res) => {};
-exports.findLesson = async (req, res) => {};
-exports.findTeacherGroup = async (req, res) => {};
+// Find all groups on a specific day of the week
+// (GET)http://localhost:3000/api/schedule/groups?dayOfWeek=1
+exports.findAllGroupsInDay = async (req, res) => {
+  try {
+    const { dayOfWeek } = req.query;
+    const groups = await Schedule.find({ day_of_week: dayOfWeek }).distinct(
+      "group"
+    );
+    res.json(groups);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve groups" });
+  }
+};
+
+// Find all students in a specific group
+// (GET)http://localhost:3000/api/schedule/group/:group  OXI AYTO
+//http://localhost:3000/api/schedule/students?group="C1" BAD LOGIC
+exports.findAllStudentsInGroup = async (req, res) => {
+  try {
+    const { group } = req.query;
+    const students = await Schedule.find({ group: group }).populate(
+      "students",
+      "name"
+    );
+    res.json(students.map((schedule) => schedule.students).flat());
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve students" });
+  }
+};
+
+// Find a lesson by lesson name
+//(GET)http://localhost:3000/api/schedule/lesson?lesson=Writing
+exports.findLesson = async (req, res) => {
+  try {
+    const { lesson } = req.query;
+    const lessonSchedule = await Schedule.find({ lesson: lesson });
+    if (!lessonSchedule) {
+      return res.status(404).json({ error: "Lesson not found" });
+    }
+    res.json(lessonSchedule);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve lesson" });
+  }
+};
+
+// Find the teacher and group for a specific schedule ID  BAD
+exports.findTeacherGroup = async (req, res) => {
+  try {
+    const { scheduleId } = req.params;
+    const schedule = await Schedule.findById(scheduleId)
+      .populate("teacher", "name")
+      .select("teacher group");
+    if (!schedule) {
+      return res.status(404).json({ error: "Schedule not found" });
+    }
+    res.json(schedule);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve teacher and group" });
+  }
+};
+
+//(GET)http://localhost:3000/api/schedule/teacher/teacher1
+//"error": "Failed to retrieve schedules"
+exports.findSchedulesByTeacher = async (req, res) => {
+  try {
+    const { teacher } = req.params;
+    const schedules = await Schedule.find({ teacher }).populate("teacher");
+    res.json(schedules);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve schedules" });
+  }
+};
+
+//http://localhost:3000/api/schedule/group/"A1"
+// []
+exports.findSchedulesByGroup = async (req, res) => {
+  try {
+    const { group } = req.params;
+    const schedules = await Schedule.find({ group }).populate("teacher");
+    res.json(schedules);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve schedules" });
+  }
+};
 
 /*
 

@@ -17,11 +17,17 @@ router.patch(
   studentController.updateStudentByUsername
 );
 router.patch("/updateStudentById", studentController.updateStudentById);
+
 //router.deleteStudent("/delete/:username", studentController.deleteStudent);
 
 // router.get(
 //   "/findStudentsByGroup/:group",
 //   studentController.findStudentsByGroup
 // );
+
+router.get("/unpaid", studentController.findNoPaidInstallment);
+router.get("/grades", studentController.getAllGrades);
+router.get("/grades/semester", studentController.getGradesBySemester);
+router.get("/group/:group", studentController.findStudentsByGroup);
 
 module.exports = router;

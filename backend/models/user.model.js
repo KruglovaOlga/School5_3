@@ -17,10 +17,12 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
+      //enum:['reader','editor','admin'],
       required: [true, "Role is required field"],
     },
     category: {
       type: String,
+      //enum:['student','teacher','admin'],
       required: [true, "Category is required field"],
     },
     // firstname: {
