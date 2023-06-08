@@ -337,38 +337,77 @@ exports.deleteByUsername = async (req, res) => {
 //   }
 // };
 
-// Find students with unpaid installments
-//http://localhost:3000/api/user/unpaid  BAD LOGIC
-exports.findNoPaidInstallment = async (req, res) => {
+// // Find students with unpaid installments
+// //http://localhost:3000/api/user/unpaid  BAD LOGIC
+// exports.findNoPaidInstallment = async (req, res) => {
+//   try {
+//     const students = await Student.find({ "tuition.status": false });
+//     res.json(students);
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to retrieve students" });
+//   }
+// };
+
+//http://localhost:3000/api/student/unpaid/student007   OK
+exports.findInstallmentsByUsername = async (req, res) => {
   try {
-    const students = await Student.find({ "tuition.status": false });
-    res.json(students);
+    const { username } = req.params;
+
+    const student = await Student.findOne({ username });
+
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+
+    const unpaidInstallments = student.tuition.filter(
+      (tuition) => !tuition.status
+    );
+    res.json(unpaidInstallments);
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve students" });
+    res.status(500).json({ error: "Failed to retrieve installments" });
   }
 };
 
-// Get grades for all students
-//http://localhost:3000/api/user/grades   BAD LOGIC
+// Get all grades for a particular student
+//http://localhost:3000/api/student/grades/student006  OK
 exports.getAllGrades = async (req, res) => {
+  const { username } = req.params;
   try {
-    const students = await Student.find({}, "firstname lastname grades");
-    res.json(students);
+    const student = await Student.findOne({ username });
+
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+
+    res.json(student.grades);
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve grades" });
   }
 };
 
 // Get grades for students by semester
-//http://localhost:3000/api/user/grades/semester?2  BAD LOGIC
+//http://localhost:3000/api/student/grades/student006/1      Cannot read properties of undefined (reading 'semester')   OR   error: "Failed to retrieve grades"
 exports.getGradesBySemester = async (req, res) => {
+  const { username } = req.params;
+
   try {
-    const { semester } = req.query;
-    const students = await Student.find(
-      { "grades.semester": semester },
-      "firstname lastname grades"
-    );
-    res.json(students);
+    const student = await Student.findOne({ username });
+
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+    // try {
+
+    //   const students = await Student.find(
+    //     { "grades.semester": semester },
+    //     "firstname lastname grades"
+    //   );
+    const { semester } = req.prams;
+    const grades = student.grades.filter((semester) => ({
+      "grades.semester": semester,
+      //semester: grades.semester,
+    }));
+    res.json(grades);
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve grades" });
   }
@@ -385,22 +424,6 @@ exports.findStudentsByGroup = async (req, res) => {
     res.status(500).json({ error: "Failed to retrieve students" });
   }
 };
-
-// exports.findStudentsByGroup = async (req, res) => {
-//   const { group } = req.params; // get the group parameter from the request
-//   try {
-//     const students = await Student.find({ class: group }); // find all students that match the group parameter
-//     if (!students || students.length === 0) {
-//       return res
-//         .status(404)
-//         .json({ message: "No students found in this group" });
-//     } else {
-//       res.json({ message: "Students found successfully", data: students });
-//     }
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
 
 /*
 In the findAll function, we use await to wait for the Student.find() method 

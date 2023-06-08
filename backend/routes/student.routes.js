@@ -38,9 +38,13 @@ router.get(
   studentController.findStudentsByGroup
 );
 
-router.get("/student/unpaid", studentController.findNoPaidInstallment);
-router.get("/student/grades", studentController.getAllGrades);
-router.get("/student/grades/semester", studentController.getGradesBySemester);
-router.get("/student/group/:group", studentController.findStudentsByGroup);
+//router.get("/unpaid", studentController.findNoPaidInstallment);
+router.get("/unpaid/:username", studentController.findInstallmentsByUsername);
+router.get("/grades/:username", studentController.getAllGrades);
+router.get(
+  "/grades/:username/:semester",
+  studentController.getGradesBySemester
+);
+router.get("/group/:group", studentController.findStudentsByGroup);
 
 module.exports = router;
