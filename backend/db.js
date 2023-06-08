@@ -18,7 +18,7 @@ const connectionString = process.env.MONGODB_URI;
 
 async function connectToDatabase() {
   try {
-    await mongoose.connect(connectionString, {
+    mongoose.connect(connectionString, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -39,15 +39,15 @@ mongoose.connection.on("disconnected", () => {
   console.log("Mongoose disconnected");
 });
 
-//const student = require("./routes/student.routes");
-//const teacher = require("./routes/teacher.routes");
+const student = require("./routes/student.routes");
+const teacher = require("./routes/teacher.routes");
 const user = require("./routes/user.routes");
 const schedule = require("./routes/schedule.routes");
 
 //routes
-//app.use("/api/student", student);
+app.use("/api/student", student);
 
-//app.use("/api/teacher", teacher);
+app.use("/api/teacher", teacher);
 
 app.use("/api/user", user);
 
