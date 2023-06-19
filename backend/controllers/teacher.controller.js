@@ -1,5 +1,8 @@
 const Teacher = require("../models/teacher.model");
 
+const bcrypt = require("bcryptjs");
+const config = require("../config/db");
+
 //http://localhost:3000/api/teacher/findAll  OK
 exports.findAll = async function (req, res) {
   console.log("Find All Teachers Controller");

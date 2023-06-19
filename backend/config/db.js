@@ -1,8 +1,12 @@
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
+
+const path = require("path");
+
 const app = express();
-const port = 3000;
-//const port = 8080;
+//const port = 3000;
+const port = 8080;
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -39,12 +43,22 @@ mongoose.connection.on("disconnected", () => {
   console.log("Mongoose disconnected");
 });
 
-const student = require("./routes/student.routes");
-const teacher = require("./routes/teacher.routes");
-const user = require("./routes/user.routes");
-const schedule = require("./routes/schedule.routes");
+const student = require("../routes/student.routes");
+const teacher = require("../routes/teacher.routes");
+const user = require("../routes/user.routes");
+const schedule = require("../routes/schedule.routes");
+
+const account = require("../routes/account.routes");
+const passport = require("passport");
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(passport.initialize());
+app.use(passport.session());
+
+require("./passport", passport); //mporei na einai lathos
 
 //routes
+//app.get("/", mainPage)
 app.use("/api/student", student);
 
 app.use("/api/teacher", teacher);
@@ -52,6 +66,8 @@ app.use("/api/teacher", teacher);
 app.use("/api/user", user);
 
 app.use("/api/schedule", schedule);
+
+app.use("/account", account);
 
 process.on("SIGINT", () => {
   mongoose.connection.close(() => {

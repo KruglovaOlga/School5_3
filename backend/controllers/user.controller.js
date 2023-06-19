@@ -2,6 +2,11 @@ const User = require("../models/user.model");
 const Student = require("../models/student.model");
 const Teacher = require("../models/teacher.model");
 
+const bcrypt = require("bcryptjs");
+const config = require("../config/db");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
+
 //http://localhost:3000/api/user/findAll  OK
 
 exports.findAll = async (req, res) => {
@@ -158,6 +163,56 @@ exports.getUserId = async (req, res) => {
       message: err.message,
     });
   }
+};
+
+exports.addUser = async (req, res) => {
+  const data = req.body;
+  let newUser = new User(data);
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newUser.password, salt);
+    newUser.password = hash;
+    const result = await newUser.save();
+    res.status(201).json({ status: true, data: result });
+  } catch (err) {
+    res.status(400).json({ status: false, data: err.message });
+  }
+};
+
+exports.auth = function (req, res) {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  User.getByUsername(username, (err, user) => {
+    if (err) throw err;
+    if (!user) return res.json({ success: false, msg: "Not found" });
+    User.comparePass(password, user.password, (err, isMatch) => {
+      if (err) throw err;
+      if (isMatch) {
+        const token = jwt.sign(user, config.secret, {
+          experesIn: 3600 * 24,
+        });
+        res.json({
+          success: true,
+          token: "JWT " + token,
+          user: {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+          },
+        });
+      } else
+        return res.json({ success: false, msg: "Password does not match" });
+    });
+  });
+};
+
+exports.comparePass = function (passFromUser, userDBPass, callback) {
+  bcrypt.compare(passFromUser, userDBPass, (err, isMatch) => {
+    if (err) throw err;
+    callback(null, isMatch);
+  });
 };
 
 // // Create a new user

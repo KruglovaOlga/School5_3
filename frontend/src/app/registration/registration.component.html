@@ -1,0 +1,18 @@
+
+<!-- ERROR Error: NG01352: If ngModel is used within a form tag, either the name attribute must be set or the form
+    control must be defined as 'standalone' in ngModelOptions.
+
+    Example 1: <input [(ngModel)]="person.firstName" name="first">
+    Example 2: <input [(ngModel)]="person.firstName" [ngModelOptions]="{standalone: true}"> -->
+
+<h1> User Registration Form</h1>
+<form >
+    <input type="text"  firstname="firstname" placeholder="Insert first name here" class="form-control"><br>
+    <input type="text"  lastname="lastname" placeholder="Insert last name here" class="form-control"><br>
+    <input type="email"  email="email" placeholder="Insert email here" class="form-control"><br>
+    <input type="text"  category="category" placeholder="Insert category here (avalable: 'student' or 'teacher')" class="form-control"><br>
+    <input type="text"  role="role" placeholder="Insert role here (avalable: 'reader' or 'editor')" class="form-control"><br>
+    <input type="text"  username="username" placeholder="Insert username here" class="form-control"><br>
+    <input type="password"  password="password" placeholder="Insert password here" class="form-control"><br>
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>
