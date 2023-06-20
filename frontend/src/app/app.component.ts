@@ -14,43 +14,43 @@ export class AppComponent {
   //   {text: 'List of all users', link: 'user/list'}
   // ]
 
-  userMenu: MenuItem[] = [
-    {text: 'FindAllStudents', link:'not-implemented-yet'},
-    {text: 'FindAllTeachers', link:'/'},
-    {text: 'FindAllSchedules', link:'/'},
-    {text: 'getById', link:'/'},
-    {text: 'create', link:'/'},  //create student and create teacher
-    {text: 'update', link:'/'},  //update student and teacher
-    {text: 'deleteById', link:'/'},   
-    {text: 'deleteByUsername', link:'/'},
-    {text: 'getUserId', link:'/'},
+//   userMenu: MenuItem[] = [
+//     {text: 'FindAllStudents', link:'user/list'},
+//     {text: 'FindAllTeachers', link:'/'},
+//     {text: 'FindAllSchedules', link:'/'},
+//     {text: 'getById', link:'/'},
+//     {text: 'create', link:'/'},  //create student and create teacher
+//     {text: 'update', link:'/'},  //update student and teacher
+//     {text: 'deleteById', link:'/'},   
+//     {text: 'deleteByUsername', link:'/'},
+//     {text: 'getUserId', link:'/'},
     
-  ] 
+//   ] 
 
-  studentMenu: MenuItem[] = [
+//   studentMenu: MenuItem[] = [
     
-    {text: 'getById', link:'/'},
-    {text: 'getByUsername', link:'/'},
-    {text: 'create', link:'/'},
-    {text: 'update', link:'/'},
-    {text: 'deleteById', link:'/'},
-    {text: 'deleteByUsername', link:'/'},
-    {text: 'findInstallmentsByUsername', link:'/'},
-    {text: 'getAllGrades', link:'/'},
-    {text: 'getGradesBySemester', link:'/'},
-    {text: 'findStudentsByGroup', link:'/'},
+//     {text: 'getById', link:'/'},
+//     {text: 'getByUsername', link:'/'},
+//     {text: 'create', link:'/'},
+//     {text: 'update', link:'/'},
+//     {text: 'deleteById', link:'/'},
+//     {text: 'deleteByUsername', link:'/'},
+//     {text: 'findInstallmentsByUsername', link:'/'},
+//     {text: 'getAllGrades', link:'/'},
+//     {text: 'getGradesBySemester', link:'/'},
+//     {text: 'findStudentsByGroup', link:'/'},
         
-  ]
+//   ]
 
-  teacherMenu: MenuItem[] = [
+//   teacherMenu: MenuItem[] = [
     
-    {text: 'getById', link:'/'},
-    {text: 'getByUsername', link:'/'},
-    {text: 'create', link:'/'},
-    {text: 'update', link:'/'},
-    {text: 'deleteById', link:'/'},
-    {text: 'deleteByUsername', link:'/'},
+//     {text: 'getById', link:'/'},
+//     {text: 'getByUsername', link:'/'},
+//     {text: 'create', link:'/'},
+//     {text: 'update', link:'/'},
+//     {text: 'deleteById', link:'/'},
+//     {text: 'deleteByUsername', link:'/'},
     
     
-  ]
+//   ]
 }

@@ -16,7 +16,7 @@ import {FormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { UserModule } from './user/user.module';
 import { ScheduleModule } from './schedule/schedule.module';
-import { DropdownComponent } from './dropdown/dropdown.component';
+//import { DropdownComponent } from './dropdown/dropdown.component';
 
 
 const appRoute: Routes = [
@@ -42,7 +42,7 @@ const appRoute: Routes = [
     HomeComponent,
     FooterComponent,
     PageNotFoundComponent,
-    DropdownComponent
+   // DropdownComponent
   ],
   imports: [
     BrowserModule,

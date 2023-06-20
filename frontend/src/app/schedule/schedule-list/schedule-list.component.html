@@ -1,1 +1,31 @@
-<p>schedule-list works!</p>
+<div *ngIf="scheduleList.length">
+    <table class="table table-striped">
+        <thead>
+            <th scope="col">Day of Week</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">Finish Time</th>
+            <th scope="col">Lesson</th>
+            <th scope="col">Group</th>
+            <th scope="col">Classroom</th>
+            <th scope="col">Teacher</th>
+            <th scope="col">Students</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let schedule of scheduleList">
+                <td>{{schedule.day_of_week }}</td>
+                <td>{{schedule.start_time }}</td>
+                <td>{{schedule.finish_time }}</td>
+                <td>{{schedule.lesson }}</td>
+                <td>{{schedule.group }}</td>
+                <td>{{schedule.classroom }}</td>
+                <td>{{schedule.teacher }}</td>
+                <td>
+                    <div *ngFor="let student of schedule.students">
+                        {{student}}
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

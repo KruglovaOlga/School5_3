@@ -8,6 +8,8 @@ import { StudentDashbordComponent } from './student-dashbord/student-dashbord.co
 import { TeacherDashbordComponent } from './teacher-dashbord/teacher-dashbord.component';
 import { MenuItem } from './user.interfaces';
 import { UsersListComponent } from './users-list/users-list.component';
+import { UserInsertComponent } from './user-insert/user-insert.component';
+import { DropdownComponent } from '../dropdown/dropdown.component';
 
 const routes: Routes = [
   { path: 'list', component: UsersListComponent},
@@ -50,6 +52,8 @@ export class UserComponent {
     StudentDashbordComponent,
     TeacherDashbordComponent,
     UsersListComponent,
+    UserInsertComponent,
+    DropdownComponent,
     
   ],
   imports: [

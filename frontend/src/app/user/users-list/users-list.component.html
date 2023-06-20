@@ -1,1 +1,28 @@
-<p>users-list works!</p>
+<div *ngIf="userList.length">
+    <table class="table table-striped">
+        <thead>
+            <th scope="col">Username</th>
+            <th scope="col">Role</th>
+            <th scope="col">Category</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">E-mail</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of userList">
+                <td>{{user.username }}</td>
+                <td>{{user.role }}</td>
+                <td>{{user.category }}</td>
+                <td>{{user.firstname }}</td>
+                <td>{{user.lastname }}</td>
+                <td>{{user.email }}</td>
+                
+                <!-- <td>
+                    <div *ngFor="let phone of user.phone">
+                        <strong>{{phone.type }}</strong><br>{{ phone.number }}
+                    </div>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>

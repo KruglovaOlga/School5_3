@@ -10,19 +10,45 @@ import { UserModule } from '../user.module';
   styleUrls: ['./admin-dashbord.component.css']
 })
 export class AdminDashbordComponent {
+  title = 'Admin Dashboard'
     usersMenu: MenuItem[] = [
-      {text: 'FindAllStudents', link:'not-implemented-yet'},
-      {text: 'FindAllTeachers', link:'/'},
-      {text: 'FindAllSchedules', link:'/'},
+      {text: 'FindAll', link:'user/list'},
+      
       {text: 'getById', link:'/'},
-      {text: 'create', link:'/'},  //create student and create teacher
-      {text: 'update', link:'/'},  //update student and teacher
+      {text: 'create', link:'/'},  
+      {text: 'update', link:'/'},  
       {text: 'deleteById', link:'/'},   
       {text: 'deleteByUsername', link:'/'},
       {text: 'getUserId', link:'/'},
       
     ]   
     
+    studentMenu: MenuItem[] = [
+    
+      {text: 'getById', link:'/'},
+      {text: 'getByUsername', link:'/'},
+      {text: 'create', link:'/'},
+      {text: 'update', link:'/'},
+      {text: 'deleteById', link:'/'},
+      {text: 'deleteByUsername', link:'/'},
+      {text: 'findInstallmentsByUsername', link:'/'},
+      {text: 'getAllGrades', link:'/'},
+      {text: 'getGradesBySemester', link:'/'},
+      {text: 'findStudentsByGroup', link:'/'},
+          
+    ]
+  
+    teacherMenu: MenuItem[] = [
+      
+      {text: 'getById', link:'/'},
+      {text: 'getByUsername', link:'/'},
+      {text: 'create', link:'/'},
+      {text: 'update', link:'/'},
+      {text: 'deleteById', link:'/'},
+      {text: 'deleteByUsername', link:'/'},
+      
+      
+    ]
   }
 
 const routes :Routes = [
