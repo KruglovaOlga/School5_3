@@ -4,9 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule} from '@angular/common/http'
 import { ScheduleService } from './schedule.service';
 import { ScheduleListComponent } from './schedule-list/schedule-list.component';
+import { ScheduleInsertComponent } from './schedule-insert/schedule-insert.component';
 
 const routes: Routes = [
   { path: 'schedule', component: ScheduleListComponent},
+  { path: 'insert-schedule', component: ScheduleInsertComponent},
 ]
 
 
@@ -14,6 +16,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ScheduleListComponent,
+    ScheduleInsertComponent,
   ],
   imports: [
     CommonModule,
