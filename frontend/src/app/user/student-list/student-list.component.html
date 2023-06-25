@@ -1,5 +1,5 @@
-<p>Users List</p>
-<div *ngIf="userList.length">
+<p>Students List</p>
+<div *ngIf="studentList.length">
   <table class="table table-striped">
       <thead>
           <th scope="col">Username</th>
@@ -10,7 +10,7 @@
           <th scope="col">E-mail</th>
       </thead>
       <tbody>
-          <tr *ngFor="let user of userList">
+          <tr *ngFor="let user of studentList">
               <td>{{user.username }}</td>
               <td>{{user.role }}</td>
               <td>{{user.category }}</td>
@@ -27,3 +27,4 @@
       </tbody>
   </table>
 </div>
+

@@ -9,27 +9,9 @@ router.get("/getByUsername/:username", teacherController.getByUsername);
 
 router.post("/create", teacherController.create);
 
-router.patch("/update/:username", teacherController.update);
+router.patch("/update/", teacherController.update);
 
 router.delete("/deleteById/:id", teacherController.deleteById);
-router.delete(
-  "/deleteByUsername/:username",
-  teacherController.deleteByUsername
-);
-
-// router.get("/findAll", teacherController.findAll);
-// router.get("/getTeacherById/:id", teacherController.getTeacherById);
-// router.get(
-//   "/getTeacherByUsername/:username",
-//   teacherController.getTeacherByUsername
-// );
-// router.post("/createTeacher", teacherController.createTeacher);
-
-// router.patch(
-//   "/updateTeacherByUsername",
-//   teacherController.updateTeacherByUsername
-// );
-// router.patch("/updateTeacherById/:id", teacherController.updateTeacherById);
-// //router.deleteTeacher("/delete/:username", teacherController.deleteTeacher);
+router.delete("/deleteByUsername/:username", teacherController.deleteByUsername);
 
 module.exports = router;

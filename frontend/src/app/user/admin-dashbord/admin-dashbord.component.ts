@@ -12,10 +12,11 @@ import { UserModule } from '../user.module';
 export class AdminDashbordComponent {
   title = 'Admin Dashboard'
     usersMenu: MenuItem[] = [
-      {text: 'FindAll', link:'user/list'},
+      // Change Markos
+      {text: 'Find All Users', link:'/user/list-users'},
       
       {text: 'getById', link:'/'},
-      {text: 'create', link:'/'},  
+      {text: 'Create a User', link:'/user/insert-users'},  
       {text: 'update', link:'/'},  
       {text: 'deleteById', link:'/'},   
       {text: 'deleteByUsername', link:'/'},
@@ -24,7 +25,8 @@ export class AdminDashbordComponent {
     ]   
     
     studentMenu: MenuItem[] = [
-    
+      
+      {text: 'FindAll', link:'/student/list-students'},
       {text: 'getById', link:'/'},
       {text: 'getByUsername', link:'/'},
       {text: 'create', link:'/'},

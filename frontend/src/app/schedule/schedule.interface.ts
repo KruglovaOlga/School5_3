@@ -20,8 +20,7 @@ export interface Schedule {
       teacher:  String,
         
       students: [
-         String
-          
+         String          
       ],
     };
     

@@ -21,6 +21,7 @@ import { ScheduleModule } from './schedule/schedule.module';
 
 const appRoute: Routes = [
   {path: 'user', loadChildren: () => import('./user/user.module').then((m) => m.UserModule),},
+  {path: 'student', loadChildren: () => import('./user/user.module').then((m) => m.UserModule),},
   {path: 'schedule', loadChildren: () => import('./schedule/schedule.module').then((m) => m.ScheduleModule),},
   {path: '', component: HomeComponent},
   {path: '**', component: PageNotFoundComponent},

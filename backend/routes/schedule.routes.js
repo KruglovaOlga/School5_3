@@ -1,54 +1,26 @@
 const express = require("express");
 const router = express.Router();
+
 const scheduleController = require("../controllers/schedule.controller");
 
-router.post("/createSchedule", scheduleController.createSchedule); //ok
 
-router.get("/getAllSchedules", scheduleController.getAllSchedules); //ok
+router.get("/findAll", scheduleController.findAll); 
+router.get("/findOne/:dayOfWeek/:teacher/:group", scheduleController.findOne);
 
-router.get(
-  "/findScheduleId/:dayOfWeek/:teacher/:group",
-  scheduleController.findScheduleId
-);
+router.post("/create", scheduleController.create);
 
-router.patch(
-  "/updateSchedule/:day_of_week/:teacher/:group",
-  scheduleController.updateSchedule
-);
 
-router.patch(
-  "/updateScheduleByDayAndGroup/:day_of_week/:group",
-  scheduleController.updateScheduleByDayAndGroup
-);
+router.patch("/update", scheduleController.update);
+router.patch("/updateByDayAndGroup", scheduleController.updateByDayAndGroup);
 
-router.delete("/deleteSchedule", scheduleController.deleteSchedule);
+router.delete("/delete/:id", scheduleController.delete);
 
-// router.post("/createSchedule", scheduleController.createSchedule); //ok
-
-// router.get("/getAllSchedules", scheduleController.getAllSchedules); //ok
-
-// router.get(
-//   "/findScheduleId/:dayOfWeek/:teacher/:group",
-//   scheduleController.findScheduleId
-// );
-
-// router.patch(
-//   "/updateSchedule/:day_of_week/:teacher/:group",
-//   scheduleController.updateSchedule
-// );
-
-// router.patch(
-//   "/updateScheduleByDayAndGroup/:day_of_week/:group",
-//   scheduleController.updateScheduleByDayAndGroup
-// );
-
-// router.delete("/deleteSchedule", scheduleController.deleteSchedule);
-
-router.get("/groups", scheduleController.findAllGroupsInDay);
-router.get("/students", scheduleController.findAllStudentsInGroup);
-router.get("/lesson", scheduleController.findLesson);
-router.get("/:scheduleId/teacher-group", scheduleController.findTeacherGroup);
+router.get("/group/:dayOfWeek", scheduleController.findAllGroupsInDay);
+router.get("/students/:group", scheduleController.findAllStudentsInGroup);
+router.get("/lesson/:lesson", scheduleController.findLesson);
+router.get("/teacher-group/:teacher/:group", scheduleController.findTeacherGroup);
 router.get("/teacher/:teacher", scheduleController.findSchedulesByTeacher);
-router.get("/group/:group", scheduleController.findSchedulesByGroup);
+router.get("/bygroup/:group", scheduleController.findSchedulesByGroup);
+
 
 module.exports = router;

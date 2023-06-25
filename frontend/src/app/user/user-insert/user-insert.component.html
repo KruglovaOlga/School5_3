@@ -1,1 +1,74 @@
-<p>user-insert works!</p>
+
+
+  <h2> Insert User Form</h2>
+<form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      formControlName="username"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      formControlName="password"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="role" class="form-label">Role</label>
+    <input
+      type="text"
+      class="form-control"
+      id="role"
+      formControlName="role"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="category" class="form-label">Category</label>
+    <input
+      type="text"
+      class="form-control"
+      id="category"
+      formControlName="category"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="firstname" class="form-label">Firstname</label>
+    <input type="text" class="form-control" id="firstname" formControlName="firstname" />
+  </div>
+  <div class="mb-3">
+    <label for="lastname" class="form-label">Lastname</label>
+    <input
+      type="text"
+      class="form-control"
+      id="lastname"
+      formControlName="lastname"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      formControlName="email"
+    />
+  </div>
+
+  
+
+ 
+
+ 
+
+  <button type="submit" class="btn btn-success" [disabled]="!inputForm.valid">
+    Submit
+  </button>
+  <!-- <button type="button" (click)="onCancel()">Cancel</button> -->
+</form>

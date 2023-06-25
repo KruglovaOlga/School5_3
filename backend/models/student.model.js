@@ -56,12 +56,11 @@ const studentSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      required: [true, "Role is required field"],
+      default: 'reader',
     },
     category: {
       type: String,
-
-      required: [true, "Category is required field"],
+      default: 'student',
     },
     firstname: {
       type: String,
@@ -73,7 +72,7 @@ const studentSchema = new mongoose.Schema(
     },
     group: {
       type: String,
-      required: [true, "Group is required field"],
+      required: [true, "Class is required field"],
     },
     grades: { type: [gradesSchema], null: true },
     email: {
@@ -99,6 +98,8 @@ const studentSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+studentSchema.plugin(uniqueValidator);
 
 const Student = mongoose.model("Student", studentSchema);
 

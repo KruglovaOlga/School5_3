@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,13 +17,11 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      //enum:['reader','editor','admin'],
-      required: [true, "Role is required field"],
+      default: "administrator",
     },
     category: {
       type: String,
-      //enum:['student','teacher','admin'],
-      default: "system",
+      default: 'system',
     },
     firstname: {
       type: String,
@@ -52,6 +51,8 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.plugin(uniqueValidator);
 
 const User = mongoose.model("User", userSchema);
 

@@ -35,11 +35,11 @@ const teacherSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      required: [true, "Role is required field"],
+      default: 'editor',
     },
     category: {
       type: String,
-      required: [true, "Category is required field"],
+      default: 'teacher',
     },
     firstname: {
       type: String,
