@@ -19,7 +19,7 @@ export class AdminDashbordComponent {
       {text: 'Create a User', link:'/user/insert-users'},  
       {text: 'update', link:'/'},  
       {text: 'deleteById', link:'/'},   
-      {text: 'deleteByUsername', link:'/'},
+      {text: 'Delete a User', link:'/user/delete-user'},
       {text: 'getUserId', link:'/'},
       
     ]   

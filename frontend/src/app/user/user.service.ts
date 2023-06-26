@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserAPIList, StudentAPIList, User } from './user.interfaces';
+import { Observable } from 'rxjs';
 
 
 const USER_API = "http://localhost:3000/api/user" 
@@ -32,4 +33,8 @@ export class UserService {
   //  getUserByUsername(username: string): Observable<any> {
   //   return this.http.get(`/api/users/${username}`);
   // }
+
+  deleteUser(username: string): Observable<any> {
+    return this.http.delete(`${USER_API}/deleteByUsername/${username}`);
+  }
 }

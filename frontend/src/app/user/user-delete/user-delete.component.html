@@ -1,0 +1,12 @@
+<form [formGroup]="deleteUserForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" formControlName="username" class="form-control" id="username" placeholder="Enter username">
+      <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+        <div *ngIf="f['username'].errors['required']">Username is required</div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="loading">Delete</button>
+  </form>
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  
