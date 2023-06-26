@@ -13,10 +13,12 @@ import { DropdownComponent } from '../dropdown/dropdown.component';
 import { StudentListComponent } from './student-list/student-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserDeleteComponent } from './user-delete/user-delete.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 const routes: Routes = [
   { path: 'list-users', component: UsersListComponent},
   { path: 'insert-users', component: UserInsertComponent},
+  { path: 'update-users', component: UserUpdateComponent},
   { path: 'delete-user', component: UserDeleteComponent},
   { path: 'list-students', component: StudentListComponent},
   { path: 'admin', component: AdminDashbordComponent},
@@ -62,6 +64,7 @@ export class UserComponent {
     DropdownComponent,
     StudentListComponent,
     UserDeleteComponent,
+    UserUpdateComponent,
     
   ],
   imports: [

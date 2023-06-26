@@ -24,6 +24,11 @@ export class UserService {
   insertUser(user: User){
      return this.http.post<UserAPIList>(`${USER_API}/create`, user)
   }
+
+  
+  updateUser(username: string, user: User): Observable<User> {
+    return this.http.put<User>(`${USER_API}/updateByUsername/${username}`, user);
+  }
   
   // findAll(){
   //   return this.http.get<UserAPIList>(`${TEACHER_API}/findAll`)

@@ -15,12 +15,12 @@ export class AdminDashbordComponent {
       // Change Markos
       {text: 'Find All Users', link:'/user/list-users'},
       
-      {text: 'getById', link:'/'},
+     // {text: 'getById', link:'/'},
       {text: 'Create a User', link:'/user/insert-users'},  
-      {text: 'update', link:'/'},  
-      {text: 'deleteById', link:'/'},   
+      {text: 'Update a User', link:'/user/update-user'},  
+     // {text: 'deleteById', link:'/'},   
       {text: 'Delete a User', link:'/user/delete-user'},
-      {text: 'getUserId', link:'/'},
+     //{text: 'getUserId', link:'/'},
       
     ]   
     

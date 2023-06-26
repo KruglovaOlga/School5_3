@@ -1,0 +1,62 @@
+
+<form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" formControlName="username" class="form-control" id="username" placeholder="Enter username">
+      <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+        <div *ngIf="f['username'].errors'[required]'">Username is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <input type="text" formControlName="role" class="form-control" id="role" placeholder="Enter role">
+        <div *ngIf="submitted && f['role'].errors" class="invalid-feedback">
+          <div *ngIf="f['role'].errors'[required]'">Role is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <input type="text" formControlName="category" class="form-control" id="category" placeholder="Enter category">
+        <div *ngIf="submitted && f['category'].errors" class="invalid-feedback">
+          <div *ngIf="f['category'].errors'[required]'">Category is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="firstname">Firstname</label>
+        <input type="text" formControlName="firstname" class="form-control" id="firstname" placeholder="Enter firstname">
+        <div *ngIf="submitted && f['firstname'].errors" class="invalid-feedback">
+          <div *ngIf="f['firstname'].errors'[required]'">Firstname is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Lastname</label>
+        <input type="text" formControlName="lastname" class="form-control" id="lastname" placeholder="Enter lastname">
+        <div *ngIf="submitted && f['lastname'].errors" class="invalid-feedback">
+          <div *ngIf="f['lastname'].errors'[required]'">Lastname is required</div>
+        </div>
+      </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter email">
+      <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+        <div *ngIf="f['email'].errors'[email]'">Email is invalid</div>
+      </div>
+    </div>
+    <!-- other fields as needed -->
+    <button type="submit" class="btn btn-primary" [disabled]="loading">Update</button>
+  </form>
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  <div *ngIf="success" class="alert alert-success">{{success}}</div>
+  <div *ngIf="currentUser" class="card">
+    <h5 class="card-header">Current User</h5>
+    <div class="card-body">
+      <p class="card-text">Username: {{currentUser.username}}</p>
+      <p class="card-text">Role: {{currentUser.role}}</p>
+      <p class="card-text">Category: {{currentUser.category}}</p>
+      <p class="card-text">Firstname: {{currentUser.firstname}}</p>
+      <p class="card-text">Lastname: {{currentUser.lastname}}</p>
+      <p class="card-text">Email: {{currentUser.email}}</p>
+      <!-- other fields as needed -->
+    </div>
+  </div>
+  
