@@ -27,7 +27,7 @@ export class UserService {
 
   
   updateUser(username: string, user: User): Observable<User> {
-    return this.http.put<User>(`${USER_API}/updateByUsername/${username}`, user);
+    return this.http.patch<User>(`${USER_API}/update/${username}`, user);
   }
   
   // findAll(){

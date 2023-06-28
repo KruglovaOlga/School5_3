@@ -46,20 +46,24 @@ export class UserUpdateComponent implements OnInit {
 
     this.loading = true;
     this.userService.updateUser(this.f['username'].value, this.updateUserForm.value)
-      .subscribe(
-        data => {
-          // handle successful update
-          console.log(data);
-          this.loading = false;
-          this.success = 'User updated successfully';
-          this.currentUser = data;
-        },
-        error => {
-          // handle error response
-          console.error(error);
-          this.error = error;
-          this.loading = false;
-        });
+    
+    .subscribe(
+      data => {
+       console.log(data);
+    
+      this.loading = false;
+      this.success = 'User updated successfully';
+      this.currentUser = data;
+      },
+      error => {
+        
+        console.error(error);
+        this.error = error;
+        this.loading = false;
+        
+
+      })
+
   }
 
 }

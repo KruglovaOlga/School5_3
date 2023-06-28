@@ -17,7 +17,7 @@ export class AdminDashbordComponent {
       
      // {text: 'getById', link:'/'},
       {text: 'Create a User', link:'/user/insert-users'},  
-      {text: 'Update a User', link:'/user/update-user'},  
+      {text: 'Update a User', link:'/user/update-users/:username'},  
      // {text: 'deleteById', link:'/'},   
       {text: 'Delete a User', link:'/user/delete-user'},
      //{text: 'getUserId', link:'/'},
@@ -27,27 +27,27 @@ export class AdminDashbordComponent {
     studentMenu: MenuItem[] = [
       
       {text: 'FindAll', link:'/student/list-students'},
-      {text: 'getById', link:'/'},
-      {text: 'getByUsername', link:'/'},
-      {text: 'create', link:'/'},
-      {text: 'update', link:'/'},
-      {text: 'deleteById', link:'/'},
-      {text: 'deleteByUsername', link:'/'},
-      {text: 'findInstallmentsByUsername', link:'/'},
-      {text: 'getAllGrades', link:'/'},
-      {text: 'getGradesBySemester', link:'/'},
-      {text: 'findStudentsByGroup', link:'/'},
+      //{text: 'getById', link:'/'},
+      //{text: 'getByUsername', link:'/'},
+      //{text: 'create', link:'/'},
+      //{text: 'update', link:'/'},
+      //{text: 'deleteById', link:'/'},
+      //{text: 'deleteByUsername', link:'/'},
+      //{text: 'findInstallmentsByUsername', link:'/'},
+      //{text: 'getAllGrades', link:'/'},
+      //{text: 'getGradesBySemester', link:'/'},
+      //{text: 'findStudentsByGroup', link:'/'},
           
     ]
   
     teacherMenu: MenuItem[] = [
       
-      {text: 'getById', link:'/'},
-      {text: 'getByUsername', link:'/'},
-      {text: 'create', link:'/'},
-      {text: 'update', link:'/'},
-      {text: 'deleteById', link:'/'},
-      {text: 'deleteByUsername', link:'/'},
+      //{text: 'getById', link:'/'},
+      //{text: 'getByUsername', link:'/'},
+      //{text: 'create', link:'/'},
+      //{text: 'update', link:'/'},
+      //{text: 'deleteById', link:'/'},
+      //{text: 'deleteByUsername', link:'/'},
       
       
     ]

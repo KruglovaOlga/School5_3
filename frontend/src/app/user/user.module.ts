@@ -18,7 +18,7 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 const routes: Routes = [
   { path: 'list-users', component: UsersListComponent},
   { path: 'insert-users', component: UserInsertComponent},
-  { path: 'update-users', component: UserUpdateComponent},
+  { path: 'update-users/:username', component: UserUpdateComponent},
   { path: 'delete-user', component: UserDeleteComponent},
   { path: 'list-students', component: StudentListComponent},
   { path: 'admin', component: AdminDashbordComponent},
@@ -29,28 +29,7 @@ const routes: Routes = [
 export class UserComponent {
   title = 'Users';
 
-  // studentsMenu:MenuItem[]=[
-     
-  //   {text: 'getById', link:'not-implemented-yet'},
-  //   {text: 'getByUsername', link:'not-implemented-yet'},
-  //   {text: 'create', link:'not-implemented-yet'},
-  //   {text: 'update', link:'not-implemented-yet'},
-  //   {text: 'deleteById', link:'not-implemented-yet'},
-  //   {text: 'deleteByUsername', link:'not-implemented-yet'},
-  //   {text: 'findInstallmentsByUsername', link:'not-implemented-yet'},
-  //   {text: 'getAllGrades', link:'not-implemented-yet'},
-  //   {text: 'getGradesBySemester', link:'not-implemented-yet'},
-  //   {text: 'findStudentsByGroup', link:'not-implemented-yet'},
-  // ]
-
-  // teachersMenu:MenuItem[] = [
-  //   {text: 'getById', link:'/'},
-  //   {text: 'getByUsername', link:'/'},
-  //   {text: 'create', link:'/'},
-  //   {text: 'update', link:'/'},
-  //   {text: 'deleteById', link:'/'},
-  //   {text: 'deleteByUsername', link:'/'},
-  // ]
+ 
   
 }
 
