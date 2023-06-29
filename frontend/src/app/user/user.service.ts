@@ -26,8 +26,17 @@ export class UserService {
   }
 
   
-  updateUser(username: string, user: User): Observable<User> {
-    return this.http.patch<User>(`${USER_API}/update/${username}`, user);
+  // updateUser(username: string, user: User): Observable<User> {
+  //   return this.http.patch<User>(`${USER_API}/update/${username}`, user);
+  // }
+
+  updateUser(user: User): Observable<User> {
+    return this.http.patch<User>(`${USER_API}/update/${user.username}`, user);
+  }
+
+  // get a user by username
+  getUserByUsername(username: string): Observable<User> {
+    return this.http.get<User>(`${USER_API}/getByUsername/${username}`);
   }
   
   // findAll(){
@@ -39,7 +48,7 @@ export class UserService {
   //   return this.http.get(`/api/users/${username}`);
   // }
 
-  deleteUser(username: string): Observable<any> {
-    return this.http.delete(`${USER_API}/deleteByUsername/${username}`);
+  deleteUser(username: string): Observable<User> {
+    return this.http.delete<User>(`${USER_API}/deleteByUsername/${username}`);
   }
 }

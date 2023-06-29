@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../user.service'; 
 import { User } from '../user.interfaces'; 
+import { ActivatedRoute } from '@angular/router'; 
 
 @Component({
   selector: 'app-user-update',
@@ -15,10 +16,12 @@ export class UserUpdateComponent implements OnInit {
   error = '';
   success = '';
   currentUser!: User;
+  username!: string; 
 
   constructor(
+    private userService: UserService,
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -28,9 +31,32 @@ export class UserUpdateComponent implements OnInit {
       category: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      email: ['', Validators.email],
+      email: ['', [Validators.required, Validators.email]]
       
     });
+
+    // get the current user data by username
+    this.userService.getUserByUsername(this.f['username'].value).subscribe(
+      data => {
+        this.currentUser = data;
+        //this.updateUserForm.patchValue(this.currentUser);
+
+        // populate the form with the current user data
+        this.updateUserForm.patchValue({
+          username: this.currentUser.username,
+          role: this.currentUser.role,
+          category: this.currentUser.category,
+          firstname: this.currentUser.firstname,
+          lastname: this.currentUser.lastname,
+          email: this.currentUser.email
+         
+        });
+        
+      },
+      error => {
+        this.error = error;
+      }
+    );
   }
 
   // convenience getter for easy access to form fields
@@ -45,25 +71,21 @@ export class UserUpdateComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userService.updateUser(this.f['username'].value, this.updateUserForm.value)
-    
-    .subscribe(
+    // call the updateUser method from the userService
+   this.userService.updateUser(this.updateUserForm.value).subscribe(
       data => {
-       console.log(data);
-    
-      this.loading = false;
-      this.success = 'User updated successfully';
-      this.currentUser = data;
+        this.success = 'User updated successfully';
+        console.log(data);
+        this.loading = false;
+        // update the current user data with the new data
+        this.currentUser = data;
+        
       },
       error => {
-        
-        console.error(error);
         this.error = error;
         this.loading = false;
-        
-
-      })
-
+      }
+    );
   }
-
 }
+
