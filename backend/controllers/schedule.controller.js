@@ -22,13 +22,11 @@ exports.findAll = async (req, res) => {
 //http://localhost:3000/api/schedule/findScheduleId/1/teacher1/B1
 // "error": "Schedule not found"
 exports.findOne = async (req, res) => {
-  
   const day_of_week = parseInt(req.params.dayOfWeek);
   const teacher = req.params.teacher;
   const group = req.params.group;
-  
+
   try {
-   
     let result = await Schedule.findOne({
       day_of_week: day_of_week,
       teacher: teacher,
@@ -36,7 +34,9 @@ exports.findOne = async (req, res) => {
     });
 
     if (!result) {
-      return res.status(404).json({ status: false, data: "Schedule not found" });
+      return res
+        .status(404)
+        .json({ status: false, data: "Schedule not found" });
     }
 
     res.status(200).json({ status: true, data: result });
@@ -113,7 +113,6 @@ exports.create = async (req, res) => {
 //(PATCH)http://localhost:3000/api/schedule/updateSchedule/1/teacher1/B1
 //"error": "Schedule not found"
 exports.update = async (req, res) => {
-
   console.log("Update schedule");
 
   const {
@@ -124,23 +123,25 @@ exports.update = async (req, res) => {
     group,
     classroom,
     teacher,
-    students
+    students,
   } = req.body;
 
   try {
     const result = await Schedule.findOneAndUpdate(
       { day_of_week: day_of_week, teacher: teacher, group: group },
-      { 
+      {
         start_time: start_time,
         finish_time: finish_time,
         lesson: lesson,
         classroom: classroom,
-        students: students
-       },
+        students: students,
+      },
       { new: true } // return the updated document
     );
     if (!result) {
-      return res.status(404).json({ status: false, data: "Schedule not found" });
+      return res
+        .status(404)
+        .json({ status: false, data: "Schedule not found" });
     }
     res.status(201).json({ status: true, data: result });
   } catch (error) {
@@ -149,9 +150,7 @@ exports.update = async (req, res) => {
   }
 };
 
-//error
 exports.updateByDayAndGroup = async (req, res) => {
- 
   console.log("Update schedule By Day And Group");
 
   const {
@@ -162,20 +161,20 @@ exports.updateByDayAndGroup = async (req, res) => {
     group,
     classroom,
     teacher,
-    students
+    students,
   } = req.body;
 
   try {
     const result = await Schedule.findOneAndUpdate(
       { day_of_week: day_of_week, group: group },
-      { 
+      {
         start_time: start_time,
         finish_time: finish_time,
         teacher: teacher,
         lesson: lesson,
         classroom: classroom,
-        students: students
-       },
+        students: students,
+      },
       { new: true } // return the updated document
     );
     if (!result) {
@@ -191,18 +190,14 @@ exports.updateByDayAndGroup = async (req, res) => {
 // delete a schedule by id
 //PLEASE, CHOOSE TO DELETE ONLY THOSE DOCS, WHERE "lesson": "Delete"
 
-//ACTUALLY DOESN'T DELETE, BUT  message: "Schedule deleted successfully"
-
 //(DELETE)http://localhost:3000/api/schedule/deleteSchedule?_id=6471a80fb8c1bdcb0a800b18
 exports.delete = async (req, res) => {
-  
   console.log("Delete schedule");
 
   // get the id from the request params
   const { id } = req.params;
 
   try {
- 
     // find and delete the schedule by id using the schema
     const result = await Schedule.findByIdAndDelete(id);
 
@@ -218,15 +213,16 @@ exports.findAllGroupsInDay = async (req, res) => {
   console.log("Find All Groups In Day");
 
   const day_of_week = parseInt(req.params.dayOfWeek);
-  
+
   try {
-   
     let result = await Schedule.find({
       day_of_week: day_of_week,
     });
 
     if (!result) {
-      return res.status(404).json({ status: false, data: "Schedule not found" });
+      return res
+        .status(404)
+        .json({ status: false, data: "Schedule not found" });
     }
 
     res.status(200).json({ status: true, data: result });
@@ -239,16 +235,14 @@ exports.findAllStudentsInGroup = async (req, res) => {
   console.log("Find All Students In Group");
 
   const group = req.params.group;
-  
+
   try {
-   
-    let result = await Schedule.find(
-      { group: group },
-      { students: 1}
-    );
+    let result = await Schedule.find({ group: group }, { students: 1 });
 
     if (!result) {
-      return res.status(404).json({ status: false, data: "Schedule not found" });
+      return res
+        .status(404)
+        .json({ status: false, data: "Schedule not found" });
     }
 
     res.status(200).json({ status: true, data: result });
@@ -261,15 +255,14 @@ exports.findLesson = async (req, res) => {
   console.log("Find Lesson");
 
   const lesson = req.params.lesson;
-  
+
   try {
-   
-    let result = await Schedule.find(
-      { lesson: lesson }
-    );
+    let result = await Schedule.find({ lesson: lesson });
 
     if (!result) {
-      return res.status(404).json({ status: false, data: "Schedule not found" });
+      return res
+        .status(404)
+        .json({ status: false, data: "Schedule not found" });
     }
 
     res.status(200).json({ status: true, data: result });
@@ -283,13 +276,14 @@ exports.findTeacherGroup = async (req, res) => {
 
   const teacher = req.params.teacher;
   const group = req.params.group;
-  
+
   try {
-   
     let result = await Schedule.find({ teacher: teacher, group: group });
 
     if (!result) {
-      return res.status(404).json({ status: false, data: "Schedule not found" });
+      return res
+        .status(404)
+        .json({ status: false, data: "Schedule not found" });
     }
 
     res.status(200).json({ status: true, data: result });
@@ -302,13 +296,14 @@ exports.findSchedulesByTeacher = async (req, res) => {
   console.log("Find Schedules By Teacher");
 
   const teacher = req.params.teacher;
-    
+
   try {
-   
     let result = await Schedule.find({ teacher: teacher });
 
     if (!result) {
-      return res.status(404).json({ status: false, data: "Schedule not found" });
+      return res
+        .status(404)
+        .json({ status: false, data: "Schedule not found" });
     }
 
     res.status(200).json({ status: true, data: result });
@@ -321,13 +316,14 @@ exports.findSchedulesByGroup = async (req, res) => {
   console.log("Find Schedules By Group");
 
   const group = req.params.group;
-    
+
   try {
-   
     let result = await Schedule.find({ group: group });
 
     if (!result) {
-      return res.status(404).json({ status: false, data: "Schedule not found" });
+      return res
+        .status(404)
+        .json({ status: false, data: "Schedule not found" });
     }
 
     res.status(200).json({ status: true, data: result });

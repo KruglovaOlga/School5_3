@@ -9,9 +9,12 @@ router.get("/getByUsername/:username", studentController.getByUsername);
 
 router.post("/create", studentController.create);
 
-router.patch("/update/", studentController.update);
+router.patch("/update/:username", studentController.update);
 
 router.delete("/deleteById/:id", studentController.deleteById);
-router.delete("/deleteByUsername/:username", studentController.deleteByUsername);
+router.delete(
+  "/deleteByUsername/:username",
+  studentController.deleteByUsername
+);
 
 module.exports = router;
